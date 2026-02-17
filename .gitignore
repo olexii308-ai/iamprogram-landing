@@ -39,3 +39,27 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ========================
+# Project-specific ignores
+# ========================
+
+# Documentation & examples (not needed for production)
+/landing-examples/
+LANDING_PAGE_CONTENT.md
+
+# IDE & Editor
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS files
+Thumbs.db
+
+# Lock files (keep only one - package-lock.json for npm)
+pnpm-lock.yaml
+yarn.lock
+
+# Qoder AI assistant
+.qoder/
