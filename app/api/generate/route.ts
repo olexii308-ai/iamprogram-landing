@@ -132,7 +132,7 @@ export async function POST(req: Request) {
         }
 
         return NextResponse.json({ svg: cleanSvg, source: 'gemini-3.0' });
-    } catch (error) {
+    } catch {
         // Fallback to a safe default
         return NextResponse.json({ svg: `<svg></svg>`, source: 'error' });
     }

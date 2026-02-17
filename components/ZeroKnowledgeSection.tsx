@@ -11,10 +11,14 @@ export function ZeroKnowledgeSection() {
     const { role } = useRole();
     const t = content[language][role].zeroKnowledge;
 
+    const openWaitlist = () => {
+        window.dispatchEvent(new CustomEvent('open-waitlist', { detail: { source: 'security-block' } }));
+    };
+
     if (!t) return null; // Safety check
 
     return (
-        <section className="py-24 bg-[#0B1120] relative overflow-hidden border-t border-white/5">
+        <section id="security-block" className="py-24 bg-[#0B1120] relative overflow-hidden border-t border-white/5">
             <div className="container mx-auto px-4 max-w-7xl">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
@@ -44,7 +48,10 @@ export function ZeroKnowledgeSection() {
                             ))}
                         </ul>
 
-                        <button className="text-white border-b border-emerald-500 pb-0.5 hover:text-emerald-400 hover:border-emerald-400 transition-colors">
+                        <button
+                            onClick={openWaitlist}
+                            className="text-white border-b border-emerald-500 pb-0.5 hover:text-emerald-400 hover:border-emerald-400 transition-colors"
+                        >
                             {t.cta} →
                         </button>
                     </motion.div>

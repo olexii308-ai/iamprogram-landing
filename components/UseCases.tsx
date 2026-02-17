@@ -29,6 +29,10 @@ export function UseCases() {
 
     const activeCase = t.useCases[activeCaseIndex];
 
+    const openWaitlist = () => {
+        window.dispatchEvent(new CustomEvent('open-waitlist', { detail: { source: 'use-cases' } }));
+    };
+
     const renderDemo = (type: string) => {
         switch (type) {
             case 'client-profile': return <ClientProfileDemo />;
@@ -62,12 +66,12 @@ export function UseCases() {
                         {language === 'uk' ? 'Можливості платформи' : 'Platform Features'}
                     </div>
                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                        {language === 'uk' ? 'Що ви отримаєте від платформи' : 'What You Get From The Platform'}
+                        {language === 'uk' ? 'Що ви отримаєте від платформи' : 'What You Get from the Platform'}
                     </h2>
                     <p className="text-slate-400 text-lg max-w-2xl mx-auto">
                         {language === 'uk'
                             ? 'Спробуйте інтерактивні демо наших ключових можливостей для вашої ролі.'
-                            : 'Experience our key features customized for your role with these interactive demos.'}
+                            : 'Explore interactive demos of our key features, tailored to your role.'}
                     </p>
 
                     {/* Interaction Hint Animation */}
@@ -189,7 +193,7 @@ export function UseCases() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center mt-12"
+                    className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4"
                 >
                     <button
                         onClick={() => document.getElementById('tools-catalog-block')?.scrollIntoView({ behavior: 'smooth' })}
@@ -199,6 +203,12 @@ export function UseCases() {
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7-7-7" />
                         </svg>
+                    </button>
+                    <button
+                        onClick={openWaitlist}
+                        className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl font-bold text-lg transition-all backdrop-blur-sm"
+                    >
+                        {language === 'uk' ? 'Записатися в beta' : 'Join Beta Waitlist'}
                     </button>
                 </motion.div>
             </div>

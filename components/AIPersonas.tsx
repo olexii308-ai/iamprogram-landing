@@ -13,7 +13,7 @@ export function AIPersonas() {
     if (!t.aiPersonas) return null;
 
     return (
-        <section className="py-24 bg-[#050B14] relative overflow-hidden">
+        <section id="ai-personas-block" className="py-24 bg-[#050B14] relative overflow-hidden">
             {/* Background Effects */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-900/10 blur-[120px] rounded-full" />

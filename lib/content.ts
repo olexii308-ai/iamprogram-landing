@@ -69,7 +69,7 @@ export const moduleTranslations: Record<'uk' | 'en', Record<string, { title: str
     },
     en: {
         cabinet: { title: "Clinical Cabinet", description: "Client list with EncryptedBlob protection. Instant browser-side search." },
-        tools: { title: "On-Call Tools", description: "FloatingPanel with tests (BDI, GAD-7) overlaying the video." },
+        tools: { title: "On-Call Tools", description: "Floating panel with assessments (BDI, GAD-7) overlaid on the active video session." },
         security: { title: "Blind Vault Security", description: "Zero-Knowledge architecture. Server only sees ciphertext." },
         library: { title: "Technique Library", description: "Database of CBT exercises and protocols for homework." },
         'ai-assistant': { title: "Smart SOAP Notes", description: "AI note drafts based on tools used during the session." },
@@ -93,8 +93,8 @@ const enDefaultUseCases: ContentData['useCases'] = [
     { id: 'voice-supervisor', title: "AI Supervisor (Voice)", description: "Voice interface for reflection and supervision after sessions.", type: 'voice-supervisor', image: "🎙️" },
     { id: 'tools-catalog', title: "Tools Catalog", description: "100+ CBT techniques, diagnostic scales, and protocols.", type: 'tools-catalog', image: "🛠️" },
     { id: 'live-sidebar', title: "On-call Workspace", description: "Notes, SOAP, and tools right during the video call.", type: 'video-workspace', image: "🖥️" },
-    { id: 'calendar', title: "Calendar & Booking", description: "Convenient session planning without sending metadata to server.", type: 'calendar-booking', image: "📅" },
-    { id: 'security-lock', title: "Zero-Knowledge Protection", description: "Encryption keys are only yours. Server sees nothing.", type: 'security-lock', image: "🔐" }
+    { id: 'calendar', title: "Calendar & Booking", description: "Convenient session planning without metadata leaving your device.", type: 'calendar-booking', image: "📅" },
+    { id: 'security-lock', title: "Zero-Knowledge Protection", description: "Encryption keys belong only to you. The server sees only ciphertext.", type: 'security-lock', image: "🔐" }
 ];
 
 const ukAIPersonas: ContentData['aiPersonas'] = {
@@ -112,9 +112,9 @@ const enAIPersonas: ContentData['aiPersonas'] = {
     title: "4 Roles of Your AI Supervisor",
     description: "AI works locally or with anonymized data. No client context leakage.",
     items: [
-        { title: "Socratic Supervisor", role: "AI Supervisor", description: "Asks deep reflective questions. Doesn't judge, guides to find blind spots and countertransference.", icon: "🧠" },
+        { title: "Socratic Supervisor", role: "AI Supervisor", description: "Asks deep reflective questions. Guides you toward blind spots and countertransference without judgment.", icon: "🧠" },
         { title: "Clinical Analyst", role: "AI Analyst", description: "Sees trends: dropout risk, therapy plateaus, compares test results with norms.", icon: "📊" },
-        { title: "Smart Assistant", role: "AI Assistant", description: "Smart SOAP Notes, auto-tagging sessions, and Pre-session Briefing.", icon: "⚡" },
+        { title: "Smart Assistant", role: "AI Assistant", description: "Drafts SOAP notes, auto-tags sessions, and prepares your pre-session briefing.", icon: "⚡" },
         { title: "Mentor & Trainer", role: "AI Trainer", description: "Client simulator for practicing complex techniques and self-check quizzes.", icon: "🎓" }
     ]
 };
@@ -278,8 +278,8 @@ export const content: Record<'uk' | 'en', Record<UserRole, ContentData>> = {
             visualPrompt: "abstract flowing lines, neon colors, dark background, biotech aesthetic, balanced composition",
             zeroKnowledge: {
                 title: "Your Data Belongs Only to You",
-                description: "We use Zero-Knowledge (Blind Vault) architecture. This means your notes and client data are encrypted on your device before sending.",
-                points: ["Asymmetric Encryption (E2EE)", "No PII on Server", "Only you hold decryption keys"],
+                description: "We use Zero-Knowledge (Blind Vault) architecture. Your notes and client data are encrypted on your device before anything is sent to the server.",
+                points: ["Asymmetric Encryption (E2EE)", "No PII stored on server", "Only you hold the decryption keys"],
                 cta: "More about Security"
             }
         },
@@ -310,16 +310,16 @@ export const content: Record<'uk' | 'en', Record<UserRole, ContentData>> = {
             visualPrompt: "calm waves, deep ocean blue, bioluminescence, organized structure, serenity",
             zeroKnowledge: {
                 title: "Your Data Belongs Only to You",
-                description: "We use Zero-Knowledge (Blind Vault) architecture. This means your notes and client data are encrypted on your device before sending.",
-                points: ["Asymmetric Encryption (E2EE)", "No PII on Server", "Only you hold decryption keys"],
+                description: "We use Zero-Knowledge (Blind Vault) architecture. Your notes and client data are encrypted on your device before anything is sent to the server.",
+                points: ["Asymmetric Encryption (E2EE)", "No PII stored on server", "Only you hold the decryption keys"],
                 cta: "More about Security"
             }
         },
         clinic: {
             hero: {
                 overline: "bravery.academy — online platform for psychologists and their clients that improves the quality of online sessions",
-                headline: "Your clients get more, and safely",
-                subheadline: "Give your therapists the tools of the future, and clients — a guarantee of complete privacy. Raise your clinic's standards to a new level.",
+                headline: "Your Clients Get More — Safely",
+                subheadline: "Equip your therapists with next-generation tools and give clients a guarantee of complete confidentiality. Raise your clinic's standards to a new level.",
                 cta: "Request Audit",
                 ctaRegister: "Join Waitlist"
             },
@@ -350,8 +350,8 @@ export const content: Record<'uk' | 'en', Record<UserRole, ContentData>> = {
         student: {
             hero: {
                 overline: "bravery.academy — online platform for psychologists and their clients that improves the quality of online sessions",
-                headline: "Starting something new is hard, but can be eased",
-                subheadline: "Your personal AI mentor is ready for training 24/7. Practice skills without fear of mistakes and gain confidence for working with real clients.",
+                headline: "Starting out is hard — we make it manageable",
+                subheadline: "Your personal AI mentor is available 24/7. Practice skills without fear of mistakes and build the confidence you need to work with real clients.",
                 cta: "Learn More",
                 ctaRegister: "Join Waitlist"
             },

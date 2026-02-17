@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 export function AIChatDemo() {
     const [messages, setMessages] = useState<{ id: number; text: string; sender: 'user' | 'ai' }[]>([

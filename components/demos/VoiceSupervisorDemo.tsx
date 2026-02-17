@@ -16,6 +16,10 @@ interface Message {
     text: string;
 }
 
+type WindowWithWebkitAudioContext = Window & {
+    webkitAudioContext?: typeof AudioContext;
+};
+
 // ========================
 // TEXT FORMATTING FOR AI RESPONSES
 // ========================
@@ -49,7 +53,7 @@ const formatMessageText = (text: string): React.ReactNode => {
         
         return parts.length > 0 ? parts : text;
     };
-    
+
     return (
         <div className="space-y-3">
             {paragraphs.map((p, idx) => {
@@ -173,7 +177,10 @@ export const VoiceSupervisorDemo = () => {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
-        const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+        const AudioCtx = window.AudioContext || (window as WindowWithWebkitAudioContext).webkitAudioContext;
+        if (!AudioCtx) return;
+
+        const ctx = new AudioCtx();
         audioCtxRef.current = ctx;
         const analyser = ctx.createAnalyser();
         analyser.fftSize = 256;
@@ -337,9 +344,9 @@ export const VoiceSupervisorDemo = () => {
             setStatus('recording');
             startVisualizer(stream);
 
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error('[VoiceSupervisor] Mic error:', err);
-            if (err.name === 'NotAllowedError') {
+            if (err instanceof DOMException && err.name === 'NotAllowedError') {
                 setError(t.errorMic);
             } else {
                 setError(t.errorMicAccess);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../LanguageCtx';
 
@@ -33,24 +33,25 @@ export function SecurityDemo() {
     const { language } = useLanguage();
     const t = uiText[language];
 
-    const [text, setText] = useState(t.localPlaceholder);
-    const [encrypted, setEncrypted] = useState("");
+    const [text, setText] = useState('');
     const [isSyncing, setIsSyncing] = useState(false);
 
-    // Update default text when language changes, if user hasn't typed
-    useEffect(() => {
-        setText(t.localPlaceholder);
-    }, [language, t.localPlaceholder]);
+    const encrypted = useMemo(() => {
+        const chars = "0101010101XYZ@#%&";
+        const sourceText = text || t.localPlaceholder;
+        let seed = 0;
 
-    // scramble effect
-    useEffect(() => {
-        let chars = "0101010101XYZ@#%&";
-        let result = "";
-        for (let i = 0; i < text.length * 1.5; i++) {
-            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        for (let i = 0; i < sourceText.length; i++) {
+            seed = (seed * 31 + sourceText.charCodeAt(i)) % 2147483647;
         }
-        setEncrypted(result);
-    }, [text]);
+
+        let result = "";
+        for (let i = 0; i < sourceText.length * 1.5; i++) {
+            seed = (seed * 1103515245 + 12345) % 2147483647;
+            result += chars.charAt(seed % chars.length);
+        }
+        return result;
+    }, [text, t.localPlaceholder]);
 
     const triggerSync = () => {
         setIsSyncing(true);

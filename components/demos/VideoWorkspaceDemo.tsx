@@ -99,7 +99,7 @@ export function VideoWorkspaceDemo() {
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [activeTab, setActiveTab] = useState('notes');
-    const [timer, setTimer] = useState('48:12');
+    const [timer] = useState('48:12');
 
     // Simulate audio levels
     const [audioLevels, setAudioLevels] = useState([10, 20, 15, 30, 25]);

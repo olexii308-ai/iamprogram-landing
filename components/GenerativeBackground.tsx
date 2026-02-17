@@ -8,13 +8,11 @@ import { content } from '../lib/content';
 
 export function GenerativeBackground() {
     const [svgContent, setSvgContent] = useState<string | null>(null);
-    const [loading, setLoading] = useState(false);
     const { role } = useRole();
     const { language } = useLanguage();
 
     useEffect(() => {
         const prompt = content[language][role].visualPrompt;
-        setLoading(true);
 
         // Debounce slightly to avoid flickering on rapid role changes
         const timer = setTimeout(() => {
@@ -29,12 +27,10 @@ export function GenerativeBackground() {
                 })
                 .then(data => {
                     if (data.svg) setSvgContent(data.svg);
-                    setLoading(false);
                 })
                 .catch(err => {
                     console.warn('Generative background failed, falling back to CSS:', err);
                     setSvgContent(null); // Ensure fallback is used
-                    setLoading(false);
                 });
         }, 500);
 

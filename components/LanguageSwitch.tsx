@@ -1,7 +1,6 @@
 'use client';
 
 import { useLanguage } from './LanguageCtx';
-import { motion } from 'framer-motion';
 
 export function LanguageSwitch() {
     const { language, setLanguage } = useLanguage();

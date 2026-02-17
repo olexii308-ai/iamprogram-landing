@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Loader2, CheckCircle, Send } from 'lucide-react';
+import { useRole } from './RoleContext';
+import { useLanguage } from './LanguageCtx';
 
 interface WaitlistModalProps {
     isOpen: boolean;
@@ -15,30 +17,80 @@ interface WaitlistModalProps {
         success: string;
         submitting: string;
     };
+    promo?: {
+        badge: string;
+        details: string;
+        note?: string;
+    };
+    source?: string;
 }
 
-export function WaitlistModal({ isOpen, onClose, labels }: WaitlistModalProps) {
+type WaitlistApiResponse = {
+    ok: boolean;
+    status: 'ok' | 'validation_error' | 'server_error';
+    message: string;
+};
+
+export function WaitlistModal({ isOpen, onClose, labels, promo, source = 'hero' }: WaitlistModalProps) {
+    const { role } = useRole();
+    const { language } = useLanguage();
     const [email, setEmail] = useState('');
-    const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const fallbackError = language === 'uk'
+        ? 'Не вдалося додати вас у лист очікування. Спробуйте ще раз.'
+        : 'Could not add you to the waitlist. Please try again.';
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!email) return;
 
         setStatus('loading');
+        setErrorMessage('');
 
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        try {
+            const response = await fetch('/api/waitlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email,
+                    role,
+                    language,
+                    source
+                })
+            });
 
-        setStatus('success');
-        setTimeout(() => {
-            onClose();
-            // Reset after closing
+            const data = (await response.json()) as WaitlistApiResponse;
+
+            if (!response.ok || !data.ok) {
+                throw new Error(data.message || fallbackError);
+            }
+
+            setStatus('success');
             setTimeout(() => {
-                setStatus('idle');
-                setEmail('');
-            }, 300);
-        }, 3000);
+                onClose();
+                setTimeout(() => {
+                    setStatus('idle');
+                    setEmail('');
+                    setErrorMessage('');
+                }, 300);
+            }, 3000);
+        } catch (error) {
+            const message = error instanceof Error ? error.message : fallbackError;
+            setStatus('error');
+            setErrorMessage(message || fallbackError);
+        }
+    };
+
+    const handleClose = () => {
+        onClose();
+        setTimeout(() => {
+            setStatus('idle');
+            setErrorMessage('');
+        }, 200);
     };
 
     return (
@@ -49,7 +101,7 @@ export function WaitlistModal({ isOpen, onClose, labels }: WaitlistModalProps) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={onClose}
+                        onClick={handleClose}
                         className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
                     />
                     <motion.div
@@ -59,7 +111,7 @@ export function WaitlistModal({ isOpen, onClose, labels }: WaitlistModalProps) {
                         className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md bg-slate-900 border border-emerald-500/20 rounded-2xl p-6 shadow-2xl shadow-emerald-500/10"
                     >
                         <button
-                            onClick={onClose}
+                            onClick={handleClose}
                             className="absolute right-4 top-4 text-slate-400 hover:text-white transition-colors"
                         >
                             <X size={20} />
@@ -72,6 +124,16 @@ export function WaitlistModal({ isOpen, onClose, labels }: WaitlistModalProps) {
                             <h2 className="text-2xl font-bold text-white mb-2">{labels.title}</h2>
                             <p className="text-slate-400">{labels.description}</p>
                         </div>
+
+                        {promo && (
+                            <div className="mb-5 rounded-xl border border-amber-400/30 bg-amber-500/10 p-4">
+                                <p className="text-sm font-semibold text-amber-200">{promo.badge}</p>
+                                <p className="mt-1 text-xs text-amber-100/90 leading-relaxed">{promo.details}</p>
+                                {promo.note && (
+                                    <p className="mt-1 text-[11px] text-amber-200/80">{promo.note}</p>
+                                )}
+                            </div>
+                        )}
 
                         {status === 'success' ? (
                             <motion.div
@@ -108,6 +170,12 @@ export function WaitlistModal({ isOpen, onClose, labels }: WaitlistModalProps) {
                                         labels.button
                                     )}
                                 </button>
+
+                                {status === 'error' && (
+                                    <p className="text-sm text-red-300 bg-red-500/10 border border-red-500/20 rounded-xl px-3 py-2">
+                                        {errorMessage}
+                                    </p>
+                                )}
                             </form>
                         )}
                     </motion.div>

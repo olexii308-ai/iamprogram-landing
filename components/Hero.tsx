@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useRole } from './RoleContext';
 import { useLanguage } from './LanguageCtx';
@@ -15,14 +15,48 @@ export function Hero() {
     const t = content[language][role].hero;
     const tWaitlist = content[language][role].waitlist;
     const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+    const [waitlistSource, setWaitlistSource] = useState('hero');
+    const isPrivateOfferRole = role === 'default' || role === 'therapist';
+
+    const promo = language === 'uk'
+        ? {
+            badge: '🎁 Beta-бонус для приватної практики',
+            details: 'Перші 30 приватних користувачів отримають 3 роки безкоштовного доступу до платформи.',
+            note: '* AI-функції оплачуються окремо.'
+        }
+        : {
+            badge: '🎁 Beta bonus for private practice',
+            details: 'First 30 private users get 3 years of free platform access.',
+            note: '* AI features are billed separately.'
+        };
+
+    useEffect(() => {
+        const handleOpenWaitlist = (event: Event) => {
+            const customEvent = event as CustomEvent<{ source?: string }>;
+            const source = customEvent.detail?.source ?? 'global';
+            setWaitlistSource(source);
+            setIsWaitlistOpen(true);
+        };
+
+        window.addEventListener('open-waitlist', handleOpenWaitlist);
+
+        return () => {
+            window.removeEventListener('open-waitlist', handleOpenWaitlist);
+        };
+    }, []);
+
+    const openWaitlist = (source: string) => {
+        setWaitlistSource(source);
+        setIsWaitlistOpen(true);
+    };
 
     return (
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20 px-4">
+        <section id="hero-block" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20 px-4">
             {/* Header Controls */}
             <div className="fixed top-6 right-6 z-50 flex items-center gap-4">
                 <button
-                    onClick={() => setIsWaitlistOpen(true)}
-                    className="hidden sm:block px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl font-bold text-sm transition-all backdrop-blur-sm shadow-lg"
+                    onClick={() => openWaitlist('hero-header')}
+                    className="px-4 sm:px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl font-bold text-xs sm:text-sm transition-all backdrop-blur-sm shadow-lg"
                 >
                     {t.ctaRegister}
                 </button>
@@ -60,7 +94,21 @@ export function Hero() {
                         >
                             {t.cta}
                         </button>
+                        <button
+                            onClick={() => openWaitlist('hero-secondary')}
+                            className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/15 text-white rounded-xl font-bold text-lg transition-all backdrop-blur-sm w-full sm:w-auto"
+                        >
+                            {t.ctaRegister}
+                        </button>
                     </div>
+
+                    {isPrivateOfferRole && (
+                        <div className="w-full max-w-2xl rounded-2xl border border-amber-400/30 bg-amber-500/10 px-4 py-3 text-left">
+                            <p className="text-sm font-semibold text-amber-200">{promo.badge}</p>
+                            <p className="mt-1 text-xs text-amber-100/90 leading-relaxed">{promo.details}</p>
+                            <p className="mt-1 text-[11px] text-amber-200/80">{promo.note}</p>
+                        </div>
+                    )}
                 </motion.div>
             </div>
 
@@ -71,6 +119,8 @@ export function Hero() {
                 isOpen={isWaitlistOpen}
                 onClose={() => setIsWaitlistOpen(false)}
                 labels={tWaitlist}
+                promo={isPrivateOfferRole ? promo : undefined}
+                source={waitlistSource}
             />
         </section>
     );

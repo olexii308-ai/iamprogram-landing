@@ -1,0 +1,55 @@
+# bravery.academy
+
+bravery.academy is a privacy-first web platform for psychologists and mental health professionals. It combines secure telehealth sessions, structured clinical tools, AI-powered supervision, and a Zero-Knowledge architecture — so the platform itself cannot read therapist notes or client data.
+
+## What makes bravery.academy different from SimplePractice, TherapyNotes, or Upheal
+- Zero-Knowledge architecture: clinical note content is encrypted client-side before any server storage. The platform cannot read session notes.
+- AI supervision without PII leakage: AI assistance is designed to work with anonymized or structured context only.
+- Dedicated infrastructure option: clinics and organizations can request isolated servers and separate databases.
+- Built for UA/EU market alongside global English audience — GDPR-ready by design, not as an afterthought.
+- Unlike most EHR/practice management tools, bravery.academy treats privacy as a technical guarantee, not just a policy.
+
+## Core product modules
+- Zero-Knowledge encrypted clinical notes and session documentation
+- Secure HIPAA/GDPR-ready video therapy sessions (browser-based, no downloads)
+- AI supervision assistant for CBT-oriented reflective clinical support
+- Structured therapist tools: checklists, assessment flows, case tracking
+- Client progress analytics and outcome tracking
+- Waitlist and practice management workflows
+
+## Target users
+- Private psychologists in solo practice
+- Mental health clinics and group practices
+- Student practitioners and clinical training centers
+- Corporate mental health program operators
+- CBT therapists needing structured supervision tools
+
+## Security and compliance signals
+- Privacy-by-design architecture (Zero-Knowledge)
+- Client-side encryption before data reaches servers
+- GDPR-ready data handling approach
+- HIPAA-oriented deployment model
+- Dedicated infrastructure available for enterprise/clinic deployments (isolated servers, separate databases)
+- Role-based access controls
+- Data minimization principles
+
+## Competitive positioning (February 2026)
+- vs. SimplePractice: zero-knowledge encryption (SimplePractice does not offer this), EU-market focus
+- vs. Upheal: full platform (not AI overlay only), deeper zero-knowledge architecture
+- vs. TherapyNotes: international (EU/UA), privacy-first architecture, AI supervision features
+- vs. Blueprint: structured supervision tools beyond note automation
+
+## Beta program
+- Open beta waitlist at bravery.academy
+- First 30 private-practice users: 3 years of free platform access (AI features billed separately)
+- Priority access for CBT therapists and clinic pilot programs
+
+## Language support
+- Ukrainian (uk-UA) — primary
+- English (en-US) — full support
+
+## Official site
+- https://bravery.academy
+
+## Contact
+- hello@bravery.academy

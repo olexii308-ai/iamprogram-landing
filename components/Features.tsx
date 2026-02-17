@@ -64,7 +64,7 @@ export function Features() {
                     <h3 className="text-2xl font-bold text-indigo-300 mb-2">
                         {language === 'uk' ? 'Ваш Copilot:' : 'Your Copilot:'} {t.aiPersona.highlight.toUpperCase()}
                     </h3>
-                    <p className="text-lg text-indigo-100 italic">"{t.aiPersona.description}"</p>
+                    <p className="text-lg text-indigo-100 italic">&ldquo;{t.aiPersona.description}&rdquo;</p>
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

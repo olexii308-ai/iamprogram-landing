@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 export type Language = 'uk' | 'en';
 
@@ -12,7 +12,7 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-export const translations = {
+export const translations: Record<Language, Record<string, string>> = {
     uk: {
         'hero.title': 'Майбутнє вже тут',
         'hero.subtitle': 'Революційне рішення для вашого бізнесу на основі штучного інтелекту.',
@@ -41,15 +41,14 @@ export const translations = {
     }
 };
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-    const [language, setLanguageState] = useState<Language>('uk');
+function resolveInitialLanguage(): Language {
+    if (typeof window === 'undefined') return 'uk';
+    const saved = localStorage.getItem('language');
+    return saved === 'en' ? 'en' : 'uk';
+}
 
-    useEffect(() => {
-        const saved = localStorage.getItem('language') as Language;
-        if (saved && (saved === 'uk' || saved === 'en')) {
-            setLanguageState(saved);
-        }
-    }, []);
+export function LanguageProvider({ children }: { children: ReactNode }) {
+    const [language, setLanguageState] = useState<Language>(resolveInitialLanguage);
 
     const setLanguage = (lang: Language) => {
         setLanguageState(lang);
@@ -57,7 +56,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     };
 
     const t = (key: string) => {
-        return (translations[language] as any)[key] || key;
+        return translations[language][key] || key;
     };
 
     return (

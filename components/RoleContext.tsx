@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode } from 'react';
 
 export type UserRole = 'default' | 'therapist' | 'clinic' | 'student';
 
@@ -11,15 +11,16 @@ interface RoleContextType {
 
 const RoleContext = createContext<RoleContextType | undefined>(undefined);
 
-export function RoleProvider({ children }: { children: ReactNode }) {
-  const [role, setRoleState] = useState<UserRole>('default');
+const allowedRoles: UserRole[] = ['default', 'therapist', 'clinic', 'student'];
 
-  useEffect(() => {
-    const saved = localStorage.getItem('role') as UserRole;
-    if (saved && ['default', 'therapist', 'clinic', 'student'].includes(saved)) {
-      setRoleState(saved);
-    }
-  }, []);
+function resolveInitialRole(): UserRole {
+  if (typeof window === 'undefined') return 'default';
+  const saved = localStorage.getItem('role');
+  return allowedRoles.includes(saved as UserRole) ? (saved as UserRole) : 'default';
+}
+
+export function RoleProvider({ children }: { children: ReactNode }) {
+  const [role, setRoleState] = useState<UserRole>(resolveInitialRole);
 
   const setRole = (r: UserRole) => {
     setRoleState(r);
