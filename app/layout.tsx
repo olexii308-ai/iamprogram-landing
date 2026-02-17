@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
 function resolveMetadataBase() {
-  const fallback = "https://bravery.academy";
+  const fallback = "https://promo.bravery.academy";
   const candidate = process.env.NEXT_PUBLIC_SITE_URL || fallback;
 
   try {

@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
 };
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bravery.academy';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://promo.bravery.academy';
 
 const schema = {
   '@context': 'https://schema.org',

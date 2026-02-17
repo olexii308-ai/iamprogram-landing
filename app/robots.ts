@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 function resolveSiteUrl() {
-  return (process.env.NEXT_PUBLIC_SITE_URL || 'https://bravery.academy').replace(/\/$/, '');
+  return (process.env.NEXT_PUBLIC_SITE_URL || 'https://promo.bravery.academy').replace(/\/$/, '');
 }
 
 export default function robots(): MetadataRoute.Robots {

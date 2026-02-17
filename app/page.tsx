@@ -12,7 +12,7 @@ import { FAQ } from '../components/FAQ';
 import { Footer } from '../components/Footer';
 import { buildFaqSchema } from '../lib/faq';
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://bravery.academy';
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://promo.bravery.academy';
 
 const organizationSchema = {
   '@context': 'https://schema.org',

@@ -40,7 +40,7 @@ bravery.academy is a privacy-first web platform for psychologists and mental hea
 - vs. Blueprint: structured supervision tools beyond note automation
 
 ## Beta program
-- Open beta waitlist at bravery.academy
+- Open beta waitlist at promo.bravery.academy
 - First 30 private-practice users: 3 years of free platform access (AI features billed separately)
 - Priority access for CBT therapists and clinic pilot programs
 
@@ -49,7 +49,7 @@ bravery.academy is a privacy-first web platform for psychologists and mental hea
 - English (en-US) — full support
 
 ## Official site
-- https://bravery.academy
+- https://promo.bravery.academy
 
 ## Contact
 - hello@bravery.academy
