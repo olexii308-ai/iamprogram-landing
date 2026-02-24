@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 export const runtime = 'nodejs';
 
@@ -34,20 +34,6 @@ const MESSAGES = {
         genericError: 'Could not add you to the waitlist. Please try again.'
     }
 };
-
-function parseSecureFlag(value: string | undefined): boolean {
-    if (!value) return false;
-    const normalized = value.trim().toLowerCase();
-    return normalized === '1' || normalized === 'true' || normalized === 'yes';
-}
-
-function requiredEnv(name: string): string {
-    const value = process.env[name]?.trim();
-    if (!value) {
-        throw new Error(`Missing required environment variable: ${name}`);
-    }
-    return value;
-}
 
 function normalizePayload(payload: WaitlistPayload): NormalizedPayload {
     const email = (payload.email ?? '').trim().toLowerCase();
@@ -102,50 +88,24 @@ export async function POST(req: Request) {
             );
         }
 
-        const smtpHost = process.env['SMTP_HOST'];
-        const smtpPortRaw = process.env['SMTP_PORT'];
-        const smtpUser = process.env['SMTP_USER'];
-        const smtpPass = process.env['SMTP_PASS'];
+        // Use Resend API Key directly from SMTP_PASS environment variable 
+        const resendApiKey = process.env['SMTP_PASS'];
+        const fromEmail = process.env['SMTP_FROM'] || 'onboarding@resend.dev';
         const contactEmail = process.env['CONTACT_EMAIL'];
 
-        if (!smtpHost || !smtpPortRaw || !smtpUser || !smtpPass || !contactEmail) {
-            console.error('[waitlist] Missing SMTP credentials. Email not sent.');
+        if (!resendApiKey || !contactEmail) {
+            console.error('[waitlist] Missing Configuration. SMTP_PASS (API Key) or CONTACT_EMAIL missing.');
             throw new Error('Server email configuration is missing');
         }
 
-        const smtpPort = Number(smtpPortRaw);
-        if (!Number.isFinite(smtpPort) || smtpPort <= 0) {
-            throw new Error('Invalid SMTP_PORT value');
-        }
-
-        const secure = parseSecureFlag(process.env.SMTP_SECURE);
-        const fromAddress = (process.env.SMTP_FROM?.trim() || smtpUser);
-
-        const transporter = nodemailer.createTransport({
-            host: smtpHost,
-            port: smtpPort,
-            secure,
-            auth: {
-                user: smtpUser,
-                pass: smtpPass
-            }
-        });
-
+        const resend = new Resend(resendApiKey);
         const submittedAt = new Date().toISOString();
 
-        const info = await transporter.sendMail({
-            from: fromAddress,
-            to: contactEmail,
+        const { data, error } = await resend.emails.send({
+            from: `Bravery Waitlist <${fromEmail}>`,
+            to: [contactEmail],
             replyTo: normalized.email,
             subject: `[Waitlist] ${normalized.email} (${normalized.role})`,
-            text: [
-                'New waitlist signup',
-                `Email: ${normalized.email}`,
-                `Role: ${normalized.role}`,
-                `Language: ${normalized.language}`,
-                `Source: ${normalized.source}`,
-                `Submitted At: ${submittedAt}`
-            ].join('\n'),
             html: `
                 <h2>New waitlist signup</h2>
                 <p><strong>Email:</strong> ${normalized.email}</p>
@@ -156,8 +116,9 @@ export async function POST(req: Request) {
             `.trim()
         });
 
-        if (info.accepted.length === 0) {
-            throw new Error('SMTP accepted no recipients');
+        if (error) {
+            console.error('[waitlist] Resend SDK Error:', error);
+            throw new Error(`Resend Error: ${error.message}`);
         }
 
         return NextResponse.json({

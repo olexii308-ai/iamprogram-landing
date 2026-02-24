@@ -11,11 +11,10 @@ import { SecurityDemo } from './demos/SecurityDemo';
 import { ClientProfileDemo } from './demos/ClientProfileDemo';
 import { ToolsCatalogDemo } from './demos/ToolsCatalogDemo';
 import { CalendarBookingDemo } from './demos/CalendarBookingDemo';
-import { SecurityLockDemo } from './demos/SecurityLockDemo';
 import { VoiceSupervisorDemo } from './demos/VoiceSupervisorDemo';
 import { useHints } from '../hooks/useHints';
-import { AdaptiveHint } from './ui/AdaptiveHint';
-import { PremiumPulse } from './ui/PremiumPulse';
+import { TextHint } from './ui/TextHint';
+import { SpotlightHighlight } from './ui/SpotlightHighlight';
 
 export function UseCases() {
     const { language } = useLanguage();
@@ -46,7 +45,6 @@ export function UseCases() {
             case 'video-workspace': return <VideoWorkspaceDemo />;
             case 'tools-catalog': return <ToolsCatalogDemo />;
             case 'calendar-booking': return <CalendarBookingDemo />;
-            case 'security-lock': return <SecurityLockDemo />;
             case 'voice-supervisor': return <VoiceSupervisorDemo />;
             case 'ai-chat': return <AIChatDemo />;
             case 'secure-dashboard': return <SecurityDemo />;
@@ -107,10 +105,14 @@ export function UseCases() {
                             onScroll={swipeHint.dismissHint}
                             className="flex lg:flex-col gap-2 lg:gap-3 overflow-x-auto lg:overflow-x-visible no-scrollbar pb-2 lg:pb-0 -mx-4 px-4 lg:mx-0 lg:px-0 snap-x snap-mandatory lg:snap-none relative"
                         >
-                            {/* V2 Swipe Hint */}
+                            {/* V3 Text Swipe Hint */}
                             {swipeHint.showHint && (
-                                <div className="absolute inset-y-0 left-0 w-full flex items-center justify-center lg:hidden z-20">
-                                    <AdaptiveHint type="swipe-horizontal" />
+                                <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex items-center justify-center lg:hidden z-20 pointer-events-auto">
+                                    <TextHint
+                                        type="swipe-horizontal"
+                                        language={language}
+                                        onDismiss={swipeHint.dismissHint}
+                                    />
                                 </div>
                             )}
 
@@ -194,18 +196,19 @@ export function UseCases() {
 
                             {/* Window Content */}
                             <div
-                                className="relative bg-[#020617] p-1 h-[350px] sm:h-[450px] md:h-auto md:aspect-[4/3] overflow-hidden"
+                                className="relative bg-[#020617] p-1 h-[350px] sm:h-[450px] md:h-auto md:aspect-[4/3] overflow-hidden group/stage"
                                 ref={tapHint.ref as any}
                                 onClickCapture={tapHint.dismissHint}
                             >
-                                {/* Interactive V2 Tap Hint */}
+                                {/* Interactive V3 Tap Hint */}
                                 {tapHint.showHint && (
-                                    <>
-                                        <PremiumPulse />
-                                        <div className="absolute inset-0 z-50 flex items-center justify-center pointer-events-none">
-                                            <AdaptiveHint type="tap" label={language === 'uk' ? 'Спробуйте функціонал' : 'Try the interface'} />
-                                        </div>
-                                    </>
+                                    <div className="absolute z-50 pointer-events-auto bottom-6 left-1/2 -translate-x-1/2 drop-shadow-2xl">
+                                        <TextHint
+                                            type="tap"
+                                            language={language}
+                                            onDismiss={tapHint.dismissHint}
+                                        />
+                                    </div>
                                 )}
 
                                 <AnimatePresence mode='wait'>

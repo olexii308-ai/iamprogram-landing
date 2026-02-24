@@ -9,7 +9,7 @@ import { GenerativeBackground } from './GenerativeBackground';
 import { WaitlistModal } from './WaitlistModal';
 import { LanguageSwitch } from './LanguageSwitch';
 import { useHints } from '../hooks/useHints';
-import { AdaptiveHint } from './ui/AdaptiveHint';
+import { TextHint } from './ui/TextHint';
 
 export function Hero() {
     const { role } = useRole();
@@ -126,7 +126,7 @@ export function Hero() {
 
             {/* Scroll Indicator Hint */}
             <div ref={scrollHint.ref as any} className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
-                {scrollHint.showHint && <AdaptiveHint type="scroll" />}
+                {scrollHint.showHint && <TextHint type="scroll" language={language} onDismiss={scrollHint.dismissHint} />}
             </div>
 
             {/* Decorative Bottom Fade */}

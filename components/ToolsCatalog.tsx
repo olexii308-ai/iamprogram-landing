@@ -6,6 +6,7 @@ import { useRole } from './RoleContext';
 import { content } from '../lib/content';
 import { useHints } from '../hooks/useHints';
 import { PremiumPulse } from './ui/PremiumPulse';
+import { TextHint } from './ui/TextHint';
 
 // ================================================================
 // Content from FEATURES_OVERVIEW.md — properly structured
@@ -339,7 +340,20 @@ export function ToolsCatalog() {
                                         className="relative p-4 rounded-xl bg-slate-900/40 border border-white/5 hover:border-emerald-500/30 hover:bg-slate-800/50 transition-all duration-500 group hover:shadow-[0_0_20px_rgba(16,185,129,0.07)] overflow-hidden"
                                     >
                                         {/* Hint Pulse (Only on first item if unread) */}
-                                        {catIdx === 0 && i === 0 && hoverHint.showHint && <PremiumPulse />}
+                                        {catIdx === 0 && i === 0 && hoverHint.showHint && (
+                                            <>
+                                                <PremiumPulse />
+                                                <div className="absolute z-50 pointer-events-auto -top-3 left-1/2 -translate-x-1/2">
+                                                    <TextHint
+                                                        type="tap"
+                                                        ukText="Наведіть курсор"
+                                                        enText="Hover to reveal"
+                                                        language={language}
+                                                        onDismiss={hoverHint.dismissHint}
+                                                    />
+                                                </div>
+                                            </>
+                                        )}
 
                                         <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                                         <div className="relative flex items-start gap-3">
