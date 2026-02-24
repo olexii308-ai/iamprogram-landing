@@ -26,16 +26,16 @@ type WindowWithWebkitAudioContext = Window & {
 const formatMessageText = (text: string): React.ReactNode => {
     // Split by double newlines for paragraphs
     const paragraphs = text.split(/\n\n+/);
-    
+
     const formatInlineText = (text: string): React.ReactNode => {
         // Bold: **text** or __text__
         const boldRegex = /\*\*(.+?)\*\*|__(.+?)__/g;
-        
+
         const parts: React.ReactNode[] = [];
         let lastIndex = 0;
         let match;
         let key = 0;
-        
+
         while ((match = boldRegex.exec(text)) !== null) {
             if (match.index > lastIndex) {
                 parts.push(text.slice(lastIndex, match.index));
@@ -50,7 +50,7 @@ const formatMessageText = (text: string): React.ReactNode => {
         if (lastIndex < text.length) {
             parts.push(text.slice(lastIndex));
         }
-        
+
         return parts.length > 0 ? parts : text;
     };
 
@@ -74,7 +74,7 @@ const formatMessageText = (text: string): React.ReactNode => {
                         </ul>
                     );
                 }
-                
+
                 // Regular paragraph
                 return (
                     <p key={idx} className="text-slate-300/90 leading-relaxed">
@@ -400,7 +400,7 @@ export const VoiceSupervisorDemo = () => {
     // RENDER
     // ========================
     return (
-        <div className="h-full min-h-[500px] flex flex-col bg-gradient-to-b from-slate-950 to-slate-900 rounded-xl overflow-hidden">
+        <div className="h-full min-h-[350px] sm:min-h-[500px] flex flex-col bg-gradient-to-b from-slate-950 to-slate-900 rounded-xl overflow-hidden">
             {/* Header */}
             <div className="px-6 py-4 border-b border-white/5 flex items-center gap-3">
                 <div className={`w-3 h-3 rounded-full transition-colors ${status === 'recording' ? 'bg-red-500 animate-pulse' :

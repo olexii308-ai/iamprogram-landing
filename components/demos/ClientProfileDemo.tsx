@@ -639,7 +639,7 @@ export function ClientProfileDemo() {
     };
 
     return (
-        <div className="w-full h-full min-h-[500px] bg-[#0B1120] text-slate-300 font-sans selection:bg-emerald-500/30 flex flex-col rounded-xl overflow-hidden border border-slate-800 shadow-2xl">
+        <div className="w-full h-full min-h-[350px] sm:min-h-[500px] bg-[#0B1120] text-slate-300 font-sans selection:bg-emerald-500/30 flex flex-col rounded-xl overflow-hidden border border-slate-800 shadow-2xl">
             {/* Top Bar */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-[#0B1120]">
                 <div>
@@ -656,20 +656,23 @@ export function ClientProfileDemo() {
                 </button>
             </div>
 
-            {/* Tabs */}
-            <div className="flex items-center px-6 border-b border-slate-800 bg-[#0B1120] overflow-x-auto no-scrollbar">
-                {t.tabs.map((tabLabel, idx) => (
-                    <button
-                        key={idx}
-                        onClick={() => setActiveTabIdx(idx)}
-                        className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${activeTabIdx === idx
-                            ? 'text-emerald-500 border-emerald-500'
-                            : 'text-slate-500 border-transparent hover:text-slate-300'
-                            }`}
-                    >
-                        {tabLabel}
-                    </button>
-                ))}
+            <div className="relative">
+                <div className="flex items-center px-4 sm:px-6 border-b border-slate-800 bg-[#0B1120] overflow-x-auto no-scrollbar">
+                    {t.tabs.map((tabLabel, idx) => (
+                        <button
+                            key={idx}
+                            onClick={() => setActiveTabIdx(idx)}
+                            className={`px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${activeTabIdx === idx
+                                ? 'text-emerald-500 border-emerald-500'
+                                : 'text-slate-500 border-transparent hover:text-slate-300'
+                                }`}
+                        >
+                            {tabLabel}
+                        </button>
+                    ))}
+                </div>
+                {/* Mobile scroll hint for tabs */}
+                <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[#0B1120] to-transparent pointer-events-none sm:hidden" />
             </div>
 
             {/* Scrollable Content */}

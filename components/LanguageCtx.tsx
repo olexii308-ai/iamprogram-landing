@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type Language = 'uk' | 'en';
 
@@ -41,14 +41,17 @@ export const translations: Record<Language, Record<string, string>> = {
     }
 };
 
-function resolveInitialLanguage(): Language {
-    if (typeof window === 'undefined') return 'uk';
-    const saved = localStorage.getItem('language');
-    return saved === 'en' ? 'en' : 'uk';
-}
-
 export function LanguageProvider({ children }: { children: ReactNode }) {
-    const [language, setLanguageState] = useState<Language>(resolveInitialLanguage);
+    // Always start with 'uk' to match SSR — prevents hydration mismatch
+    const [language, setLanguageState] = useState<Language>('uk');
+
+    // Sync from localStorage AFTER mount (client-only)
+    useEffect(() => {
+        const saved = localStorage.getItem('language');
+        if (saved === 'en') {
+            setLanguageState('en');
+        }
+    }, []);
 
     const setLanguage = (lang: Language) => {
         setLanguageState(lang);

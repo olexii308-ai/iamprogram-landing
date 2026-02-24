@@ -108,7 +108,7 @@ export function WaitlistModal({ isOpen, onClose, labels, promo, source = 'hero' 
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md bg-slate-900 border border-emerald-500/20 rounded-2xl p-6 shadow-2xl shadow-emerald-500/10"
+                        className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[calc(100%-2rem)] sm:w-full max-w-md max-h-[90vh] overflow-y-auto bg-slate-900 border border-emerald-500/20 rounded-2xl p-5 sm:p-6 shadow-2xl shadow-emerald-500/10"
                     >
                         <button
                             onClick={handleClose}
@@ -152,7 +152,7 @@ export function WaitlistModal({ isOpen, onClose, labels, promo, source = 'hero' 
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                         placeholder={labels.placeholder}
-                                        className="w-full bg-slate-800/50 border border-slate-700 focus:border-emerald-500/50 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 outline-none transition-all"
+                                        className="w-full bg-slate-800/50 border border-slate-700 focus:border-emerald-500/50 focus:ring-4 focus:ring-emerald-500/10 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 outline-none transition-all duration-300"
                                         required
                                     />
                                 </div>

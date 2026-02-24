@@ -15,14 +15,14 @@ export function EncryptionVisualizer() {
     }, []);
 
     return (
-        <div className="relative w-full h-64 bg-slate-900/50 rounded-2xl border border-white/5 overflow-hidden flex items-center justify-between px-8 md:px-16">
+        <div className="relative w-full h-48 sm:h-64 bg-slate-900/50 rounded-2xl border border-white/5 overflow-hidden flex items-center justify-between px-4 sm:px-8 md:px-16">
 
             {/* Grid Background */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:20px_20px]" />
 
             {/* Client Side (Left) */}
             <div className="z-10 flex flex-col items-center gap-2">
-                <div className="w-16 h-16 rounded-xl bg-indigo-500/20 border border-indigo-500 flex items-center justify-center text-2xl shadow-[0_0_30px_rgba(99,102,241,0.2)]">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-indigo-500/20 border border-indigo-500 flex items-center justify-center text-xl sm:text-2xl shadow-[0_0_30px_rgba(99,102,241,0.2)]">
                     💻
                 </div>
                 <div className="text-xs font-mono text-indigo-300">CLIENT</div>
@@ -36,7 +36,7 @@ export function EncryptionVisualizer() {
 
             {/* Server Side (Right) */}
             <div className="z-10 flex flex-col items-center gap-2">
-                <div className="w-16 h-16 rounded-xl bg-slate-800 border border-slate-600 flex items-center justify-center text-2xl">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-slate-800 border border-slate-600 flex items-center justify-center text-xl sm:text-2xl">
                     ☁️
                 </div>
                 <div className="text-xs font-mono text-slate-500">SERVER</div>
@@ -70,7 +70,7 @@ function Particle() {
                 initial={{ backgroundColor: '#6366f1', content: '""' }} // Indigo (Raw)
                 animate={{ backgroundColor: ['#6366f1', '#6366f1', '#10b981', '#10b981'] }} // Turn Emerald (Encrypted)
                 transition={{ duration: 4, times: [0, 0.45, 0.55, 1] }}
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold text-white shadow-lg"
+                className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center text-[8px] sm:text-[10px] font-bold text-white shadow-lg"
             >
                 <motion.span
                     initial={{ opacity: 1 }}

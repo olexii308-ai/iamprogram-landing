@@ -2,6 +2,10 @@
 
 import { motion } from 'framer-motion';
 import { useLanguage } from './LanguageCtx';
+import { useRole } from './RoleContext';
+import { content } from '../lib/content';
+import { useHints } from '../hooks/useHints';
+import { PremiumPulse } from './ui/PremiumPulse';
 
 // ================================================================
 // Content from FEATURES_OVERVIEW.md — properly structured
@@ -265,8 +269,13 @@ const roadmapItems: Record<'uk' | 'en', { category: string; items: Tool[] }[]> =
 
 export function ToolsCatalog() {
     const { language } = useLanguage();
+    const { role } = useRole();
+    const t = content[language][role];
     const features = currentFeatures[language];
     const roadmap = roadmapItems[language];
+
+    // Hint System
+    const hoverHint = useHints('tools-hover');
 
     const totalCurrentTools = features.reduce((sum, cat) => sum + cat.tools.length, 0);
     const totalRoadmapItems = roadmap.reduce((sum, cat) => sum + cat.items.length, 0);
@@ -291,8 +300,8 @@ export function ToolsCatalog() {
                     <div className="inline-block px-4 py-1.5 rounded-full bg-slate-900/50 border border-slate-800 text-sm text-emerald-400 font-medium mb-4">
                         {language === 'uk' ? `${totalCurrentTools} інструментів доступно` : `${totalCurrentTools} tools available`}
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                        {language === 'uk' ? 'Усі інструменти платформи' : 'All Platform Tools'}
+                    <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4 sm:mb-6 tracking-tight balanced-text px-2">
+                        {t.features.title}
                     </h2>
                     <p className="text-slate-400 text-lg max-w-2xl mx-auto">
                         {language === 'uk'
@@ -320,13 +329,20 @@ export function ToolsCatalog() {
                                 {category.tools.map((tool, i) => (
                                     <motion.div
                                         key={tool.title}
+                                        ref={catIdx === 0 && i === 0 ? hoverHint.ref as any : undefined}
+                                        onMouseEnter={hoverHint.dismissHint}
+                                        onTouchStart={hoverHint.dismissHint}
                                         initial={{ opacity: 0, y: 10 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
                                         transition={{ delay: i * 0.03 }}
-                                        className="p-4 rounded-xl bg-slate-900/40 border border-white/5 hover:border-emerald-500/30 hover:bg-slate-800/50 transition-all duration-300 group"
+                                        className="relative p-4 rounded-xl bg-slate-900/40 border border-white/5 hover:border-emerald-500/30 hover:bg-slate-800/50 transition-all duration-500 group hover:shadow-[0_0_20px_rgba(16,185,129,0.07)] overflow-hidden"
                                     >
-                                        <div className="flex items-start gap-3">
+                                        {/* Hint Pulse (Only on first item if unread) */}
+                                        {catIdx === 0 && i === 0 && hoverHint.showHint && <PremiumPulse />}
+
+                                        <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                                        <div className="relative flex items-start gap-3">
                                             <span className="text-xl mt-0.5 group-hover:scale-110 transition-transform shrink-0">
                                                 {tool.icon}
                                             </span>
@@ -388,10 +404,10 @@ export function ToolsCatalog() {
                                                 {item.icon}
                                             </span>
                                             <div className="min-w-0 flex-1">
-                                                <h4 className="font-medium text-slate-400 text-xs group-hover:text-slate-300 transition-colors truncate">
+                                                <h4 className="font-medium text-slate-400 text-xs group-hover:text-slate-300 transition-colors sm:truncate">
                                                     {item.title}
                                                 </h4>
-                                                <p className="text-slate-600 text-[10px] leading-relaxed truncate">
+                                                <p className="text-slate-600 text-[11px] sm:text-[10px] leading-relaxed sm:truncate">
                                                     {item.description}
                                                 </p>
                                             </div>

@@ -51,7 +51,7 @@ export function SecurityLockDemo() {
     };
 
     return (
-        <div className="w-full h-full min-h-[500px] bg-black text-slate-300 font-sans selection:bg-emerald-500/30 flex flex-col items-center justify-center rounded-xl overflow-hidden border border-slate-900 shadow-2xl relative">
+        <div className="w-full h-full min-h-[350px] sm:min-h-[500px] bg-black text-slate-300 font-sans selection:bg-emerald-500/30 flex flex-col items-center justify-center rounded-xl overflow-hidden border border-slate-900 shadow-2xl relative">
 
             {/* Background Effects */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-900/50 via-black to-black pointer-events-none" />

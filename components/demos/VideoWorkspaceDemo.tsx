@@ -237,7 +237,7 @@ export function VideoWorkspaceDemo() {
     }
 
     return (
-        <div className="relative w-full aspect-square md:aspect-video bg-slate-950 rounded-xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col md:flex-row font-sans selection:bg-indigo-500/30">
+        <div className="relative w-full aspect-[3/4] sm:aspect-square md:aspect-video bg-slate-950 rounded-xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col md:flex-row font-sans selection:bg-indigo-500/30">
             {/* Main Video Area */}
             <div className="flex-1 relative bg-slate-900 overflow-hidden group">
                 {/* Simulated Video Feed (Client) */}
@@ -299,17 +299,17 @@ export function VideoWorkspaceDemo() {
                 </div>
 
                 {/* Floating Controls Bar */}
-                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-4 p-2.5 rounded-2xl bg-slate-950/90 backdrop-blur-xl border border-white/10 shadow-2xl z-10 transition-all duration-300 hover:scale-105 hover:bg-slate-950">
-                    <button className="w-11 h-11 rounded-xl bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-white transition-all border border-white/5 hover:border-white/20 active:scale-95">
+                <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-4 p-2 sm:p-2.5 rounded-2xl bg-slate-950/90 backdrop-blur-xl border border-white/10 shadow-2xl z-10 transition-all duration-300 hover:scale-105 hover:bg-slate-950">
+                    <button className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-white transition-all border border-white/5 hover:border-white/20 active:scale-95">
                         🎤
                     </button>
-                    <button className="w-11 h-11 rounded-xl bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-white transition-all border border-white/5 hover:border-white/20 active:scale-95">
+                    <button className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-white transition-all border border-white/5 hover:border-white/20 active:scale-95">
                         📹
                     </button>
                     <div className="w-px h-6 bg-white/10 my-auto" />
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                        className={`w-11 h-11 rounded-xl flex items-center justify-center transition-all border ${isSidebarOpen ? 'bg-indigo-600 text-white border-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.3)]' : 'bg-slate-800 text-slate-400 hover:text-white border-white/5'}`}
+                        className={`w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition-all border ${isSidebarOpen ? 'bg-indigo-600 text-white border-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.3)]' : 'bg-slate-800 text-slate-400 hover:text-white border-white/5'}`}
                     >
                         🛠️
                     </button>
@@ -329,10 +329,10 @@ export function VideoWorkspaceDemo() {
                 {isSidebarOpen && (
                     <motion.div
                         initial={{ width: 0, opacity: 0 }}
-                        animate={{ width: 340, opacity: 1 }}
+                        animate={{ width: '100%', opacity: 1 }}
                         exit={{ width: 0, opacity: 0 }}
                         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                        className="h-full bg-[#0B1120] border-l border-slate-800 flex flex-col shadow-2xl relative z-20"
+                        className="h-full md:max-w-[340px] bg-[#0B1120] border-l border-slate-800 flex flex-col shadow-2xl relative z-20"
                     >
                         {/* Panel Header */}
                         <div className="h-14 border-b border-slate-800 flex items-center justify-between px-4 bg-[#0F172A]">

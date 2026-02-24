@@ -102,11 +102,16 @@ export async function POST(req: Request) {
             );
         }
 
-        const smtpHost = requiredEnv('SMTP_HOST');
-        const smtpPortRaw = requiredEnv('SMTP_PORT');
-        const smtpUser = requiredEnv('SMTP_USER');
-        const smtpPass = requiredEnv('SMTP_PASS');
-        const contactEmail = requiredEnv('CONTACT_EMAIL');
+        const smtpHost = process.env['SMTP_HOST'];
+        const smtpPortRaw = process.env['SMTP_PORT'];
+        const smtpUser = process.env['SMTP_USER'];
+        const smtpPass = process.env['SMTP_PASS'];
+        const contactEmail = process.env['CONTACT_EMAIL'];
+
+        if (!smtpHost || !smtpPortRaw || !smtpUser || !smtpPass || !contactEmail) {
+            console.error('[waitlist] Missing SMTP credentials. Email not sent.');
+            throw new Error('Server email configuration is missing');
+        }
 
         const smtpPort = Number(smtpPortRaw);
         if (!Number.isFinite(smtpPort) || smtpPort <= 0) {

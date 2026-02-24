@@ -236,11 +236,11 @@ export function ToolsCatalogDemo() {
     });
 
     return (
-        <div className="w-full h-full min-h-[500px] bg-[#0B1120] text-slate-300 font-sans selection:bg-emerald-500/30 flex flex-col rounded-xl overflow-hidden border border-slate-800 shadow-2xl relative">
+        <div className="w-full h-full min-h-[350px] sm:min-h-[500px] bg-[#0B1120] text-slate-300 font-sans selection:bg-emerald-500/30 flex flex-col rounded-xl overflow-hidden border border-slate-800 shadow-2xl relative">
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-emerald-500/5 pointer-events-none" />
 
             {/* Header */}
-            <div className="p-6 border-b border-slate-800 z-10 w-full sm:w-auto">
+            <div className="p-4 sm:p-6 border-b border-slate-800 z-10 w-full">
                 <h2 className="text-xl font-bold text-white mb-1">{t.title}</h2>
                 <div className="text-sm text-slate-500">{t.subtitle}</div>
 
@@ -287,7 +287,7 @@ export function ToolsCatalogDemo() {
             </div>
 
             {/* Grid */}
-            <div className="flex-1 overflow-y-auto p-6 z-10 bg-[#0B1120]">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6 z-10 bg-[#0B1120]">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {filteredTools.map((tool) => (
                         <motion.div

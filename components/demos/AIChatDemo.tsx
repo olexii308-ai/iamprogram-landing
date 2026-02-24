@@ -38,7 +38,7 @@ export function AIChatDemo() {
     };
 
     return (
-        <div className="w-full h-full min-h-[400px] bg-slate-900 rounded-xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col">
+        <div className="w-full h-full min-h-[300px] sm:min-h-[400px] bg-slate-900 rounded-xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col">
             {/* Header */}
             <div className="p-4 border-b border-slate-800 bg-slate-900/50 backdrop-blur flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20">
@@ -63,8 +63,8 @@ export function AIChatDemo() {
                         className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                         <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${msg.sender === 'user'
-                                ? 'bg-indigo-600 text-white rounded-br-none'
-                                : 'bg-slate-800 text-slate-200 rounded-bl-none border border-slate-700'
+                            ? 'bg-indigo-600 text-white rounded-br-none'
+                            : 'bg-slate-800 text-slate-200 rounded-bl-none border border-slate-700'
                             }`}>
                             {msg.text}
                         </div>

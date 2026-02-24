@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type UserRole = 'default' | 'therapist' | 'clinic' | 'student';
 
@@ -13,14 +13,17 @@ const RoleContext = createContext<RoleContextType | undefined>(undefined);
 
 const allowedRoles: UserRole[] = ['default', 'therapist', 'clinic', 'student'];
 
-function resolveInitialRole(): UserRole {
-  if (typeof window === 'undefined') return 'default';
-  const saved = localStorage.getItem('role');
-  return allowedRoles.includes(saved as UserRole) ? (saved as UserRole) : 'default';
-}
-
 export function RoleProvider({ children }: { children: ReactNode }) {
-  const [role, setRoleState] = useState<UserRole>(resolveInitialRole);
+  // Always start with 'therapist' to match SSR — prevents hydration mismatch
+  const [role, setRoleState] = useState<UserRole>('therapist');
+
+  // Sync from localStorage AFTER mount (client-only)
+  useEffect(() => {
+    const saved = localStorage.getItem('role');
+    if (saved && allowedRoles.includes(saved as UserRole)) {
+      setRoleState(saved as UserRole);
+    }
+  }, []);
 
   const setRole = (r: UserRole) => {
     setRoleState(r);

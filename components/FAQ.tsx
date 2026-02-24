@@ -41,7 +41,7 @@ export function FAQ() {
                     <span className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-semibold tracking-wider uppercase">
                         {copy.badge}
                     </span>
-                    <h2 className="mt-4 text-3xl md:text-5xl font-bold text-white tracking-tight">{copy.title}</h2>
+                    <h2 className="mt-4 text-2xl sm:text-3xl md:text-5xl font-bold text-white tracking-tight">{copy.title}</h2>
                     <p className="mt-4 text-slate-400 text-lg max-w-2xl mx-auto">{copy.description}</p>
                 </motion.div>
 
@@ -59,7 +59,7 @@ export function FAQ() {
                                     onClick={() => setOpenIndex(isOpen ? -1 : index)}
                                     className="w-full text-left px-5 py-4 flex items-center justify-between gap-4"
                                 >
-                                    <span className="font-semibold text-white">{item.question}</span>
+                                    <span className="font-semibold text-white text-sm sm:text-base pr-2">{item.question}</span>
                                     <span className={`text-emerald-300 transition-transform ${isOpen ? 'rotate-45' : ''}`}>
                                         +
                                     </span>

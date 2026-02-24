@@ -63,9 +63,9 @@ export function Footer() {
     };
 
     return (
-        <footer id="footer-block" className="py-14 bg-slate-950 border-t border-white/5 text-slate-400 text-sm">
+        <footer id="footer-block" className="py-14 pb-24 md:pb-14 bg-slate-950 border-t border-white/5 text-slate-400 text-sm">
             <div className="container mx-auto px-4 max-w-6xl">
-                <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-6 md:p-8 mb-10">
+                <div className="rounded-2xl border border-white/10 bg-slate-900/40 p-5 sm:p-6 md:p-8 mb-8 sm:mb-10">
                     <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
                         <div>
                             <p className="text-lg font-semibold text-white">{copy.headline}</p>
@@ -74,7 +74,7 @@ export function Footer() {
                         </div>
                         <button
                             onClick={openWaitlist}
-                            className="px-7 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-emerald-500/25"
+                            className="w-full sm:w-auto px-7 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold transition-all shadow-lg hover:shadow-emerald-500/25"
                         >
                             {copy.cta}
                         </button>
@@ -89,7 +89,7 @@ export function Footer() {
                     )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-white/5">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 pb-8 border-b border-white/5">
                     <div>
                         <h3 className="text-white font-semibold mb-3">bravery.academy</h3>
                         <p className="text-slate-400 leading-relaxed max-w-sm">

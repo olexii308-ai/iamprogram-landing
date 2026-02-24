@@ -30,7 +30,7 @@ export function AIPersonas() {
                     <div className="inline-block px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-sm text-indigo-400 font-medium mb-4">
                         AI-Supervision
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+                    <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4 sm:mb-6 tracking-tight balanced-text px-2">
                         {t.aiPersonas.title}
                     </h2>
                     <p className="text-slate-400 text-lg max-w-2xl mx-auto">

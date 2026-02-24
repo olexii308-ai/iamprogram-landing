@@ -32,7 +32,7 @@ export function ZeroKnowledgeSection() {
                         <div className="inline-block px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold tracking-wider uppercase mb-6">
                             Security First
                         </div>
-                        <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
+                        <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4 sm:mb-6 leading-tight">
                             {t.title}
                         </h2>
                         <p className="text-lg text-slate-400 mb-8 leading-relaxed">

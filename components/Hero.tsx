@@ -8,6 +8,8 @@ import { content } from '../lib/content';
 import { GenerativeBackground } from './GenerativeBackground';
 import { WaitlistModal } from './WaitlistModal';
 import { LanguageSwitch } from './LanguageSwitch';
+import { useHints } from '../hooks/useHints';
+import { AdaptiveHint } from './ui/AdaptiveHint';
 
 export function Hero() {
     const { role } = useRole();
@@ -17,6 +19,9 @@ export function Hero() {
     const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
     const [waitlistSource, setWaitlistSource] = useState('hero');
     const isPrivateOfferRole = role === 'default' || role === 'therapist';
+
+    // AI Supervisor V2 Hint System
+    const scrollHint = useHints('hero-scroll');
 
     const promo = language === 'uk'
         ? {
@@ -40,10 +45,17 @@ export function Hero() {
 
         window.addEventListener('open-waitlist', handleOpenWaitlist);
 
+        // Also track scroll to dismiss the scroll hint
+        const handleScroll = () => {
+            if (window.scrollY > 100) scrollHint.dismissHint();
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
         return () => {
             window.removeEventListener('open-waitlist', handleOpenWaitlist);
+            window.removeEventListener('scroll', handleScroll);
         };
-    }, []);
+    }, [scrollHint]);
 
     const openWaitlist = (source: string) => {
         setWaitlistSource(source);
@@ -51,12 +63,12 @@ export function Hero() {
     };
 
     return (
-        <section id="hero-block" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20 px-4">
+        <section id="hero-block" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 sm:pt-32 pb-24 sm:pb-20 px-4">
             {/* Header Controls */}
-            <div className="fixed top-6 right-6 z-50 flex items-center gap-4">
+            <div className="absolute top-4 sm:top-6 right-3 sm:right-6 z-50 flex items-center gap-2 sm:gap-4">
                 <button
                     onClick={() => openWaitlist('hero-header')}
-                    className="px-4 sm:px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl font-bold text-xs sm:text-sm transition-all backdrop-blur-sm shadow-lg"
+                    className="px-4 sm:px-6 py-2 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-xl font-bold text-[10px] sm:text-sm transition-all backdrop-blur-sm shadow-lg whitespace-nowrap"
                 >
                     {t.ctaRegister}
                 </button>
@@ -73,24 +85,24 @@ export function Hero() {
                     transition={{ duration: 0.8, ease: "easeOut" }}
                     className="flex flex-col items-center gap-6"
                 >
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-sm mb-2">
-                        <span className="text-sm font-medium text-emerald-400 tracking-wide text-center">
+                    <div className="inline-flex items-center justify-center -mx-2 sm:mx-0 px-3 py-1.5 sm:py-1 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-sm mb-2 max-w-full">
+                        <span className="text-[11px] sm:text-sm font-medium text-emerald-400 tracking-wide text-center leading-tight">
                             {t.overline}
                         </span>
                     </div>
 
-                    <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1] text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/50">
+                    <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-[1.1] text-transparent bg-clip-text bg-gradient-to-r from-white via-indigo-200 to-white/60 animate-gradient-text balanced-text px-2">
                         {t.headline}
                     </h1>
 
-                    <p className="text-lg md:text-xl text-slate-400 max-w-2xl leading-relaxed">
+                    <p className="text-base sm:text-lg md:text-xl text-slate-400 max-w-2xl leading-relaxed px-2 sm:px-0">
                         {t.subheadline}
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center gap-4 mt-8">
                         <button
                             onClick={() => document.getElementById('use-cases-block')?.scrollIntoView({ behavior: 'smooth' })}
-                            className="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-emerald-500/25 w-full sm:w-auto"
+                            className="btn-shine-effect group px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] w-full sm:w-auto"
                         >
                             {t.cta}
                         </button>
@@ -110,6 +122,11 @@ export function Hero() {
                         </div>
                     )}
                 </motion.div>
+            </div>
+
+            {/* Scroll Indicator Hint */}
+            <div ref={scrollHint.ref as any} className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
+                {scrollHint.showHint && <AdaptiveHint type="scroll" />}
             </div>
 
             {/* Decorative Bottom Fade */}

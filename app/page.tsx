@@ -91,15 +91,28 @@ export default function LandingPage() {
 
       <LanguageProvider>
         <RoleProvider>
-          <main className="min-h-screen bg-slate-950 text-white selection:bg-emerald-500/30">
-            <RoleSelector />
-            <Hero />
-            <UseCases />
-            <AIPersonas />
-            <ToolsCatalog />
-            <ZeroKnowledgeSection />
-            <FAQ />
-            <Footer />
+          <main className="min-h-screen relative bg-slate-950 text-white selection:bg-emerald-500/30 overflow-hidden pb-24 md:pb-0">
+            {/* Premium Ambient Background */}
+            <div className="fixed inset-0 z-0 pointer-events-none">
+              {/* Animated Floating Orbs */}
+              <div className="absolute top-[10%] left-[20%] w-[40vw] h-[40vw] rounded-full bg-emerald-900/10 blur-[100px] animate-float-slow mix-blend-screen" />
+              <div className="absolute bottom-[20%] right-[10%] w-[35vw] h-[35vw] rounded-full bg-indigo-900/10 blur-[100px] animate-float-slow mix-blend-screen" style={{ animationDelay: '-6s' }} />
+
+              {/* Dynamic SVN Noise Overlay for Texture */}
+              <div className="absolute inset-0 bg-noise mix-blend-overlay" />
+            </div>
+
+            {/* Content Layer */}
+            <div className="relative z-10">
+              <RoleSelector />
+              <Hero />
+              <UseCases />
+              <AIPersonas />
+              <ToolsCatalog />
+              <ZeroKnowledgeSection />
+              <FAQ />
+              <Footer />
+            </div>
           </main>
         </RoleProvider>
       </LanguageProvider>

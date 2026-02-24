@@ -82,19 +82,19 @@ export function CalendarBookingDemo() {
     const dateStrip = t.dayLabels.map((d, i) => `${d}\n${16 + i}`);
 
     return (
-        <div className="w-full h-full min-h-[500px] bg-[#0B1120] text-slate-300 font-sans selection:bg-emerald-500/30 flex flex-col rounded-xl overflow-hidden border border-slate-800 shadow-2xl relative">
+        <div className="w-full h-full min-h-[400px] sm:min-h-[500px] bg-[#0B1120] text-slate-300 font-sans selection:bg-emerald-500/30 flex flex-col rounded-xl overflow-hidden border border-slate-800 shadow-2xl relative">
 
             {/* View Switcher (Demo Control) */}
-            <div className="absolute top-4 right-4 z-20 bg-slate-900 border border-slate-700 rounded-lg p-1 flex gap-1">
+            <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 bg-slate-900 border border-slate-700 rounded-lg p-1 flex flex-col sm:flex-row gap-1">
                 <button
                     onClick={() => setView('calendar')}
-                    className={`px-3 py-1 rounded text-xs font-medium transition-colors ${view === 'calendar' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'}`}
+                    className={`px-2 sm:px-3 py-1 rounded text-[10px] sm:text-xs font-medium transition-colors ${view === 'calendar' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'}`}
                 >
                     {t.viewTherapist}
                 </button>
                 <button
                     onClick={() => setView('booking')}
-                    className={`px-3 py-1 rounded text-xs font-medium transition-colors ${view === 'booking' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white'}`}
+                    className={`px-2 sm:px-3 py-1 rounded text-[10px] sm:text-xs font-medium transition-colors ${view === 'booking' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white'}`}
                 >
                     {t.viewClient}
                 </button>
@@ -110,7 +110,7 @@ export function CalendarBookingDemo() {
                         className="flex flex-col h-full bg-[#0F172A]"
                     >
                         {/* Calendar Header */}
-                        <div className="p-6 border-b border-slate-800 bg-[#0B1120]">
+                        <div className="p-4 sm:p-6 border-b border-slate-800 bg-[#0B1120]">
                             <div className="flex gap-4 mb-4">
                                 <div className="bg-slate-900 border border-slate-700 rounded-lg p-2 px-4 flex items-center gap-3">
                                     <div className="text-emerald-500 text-xl">📅</div>
@@ -154,15 +154,15 @@ export function CalendarBookingDemo() {
                         {/* Calendar Grid */}
                         <div className="flex-1 overflow-auto relative">
                             {/* Header Row */}
-                            <div className="grid grid-cols-[50px_repeat(7,1fr)] border-b border-slate-800 bg-[#0B1120] sticky top-0 z-10">
-                                <div className="border-r border-slate-800 p-2 text-[10px] text-slate-500 text-center font-bold">{t.allDay}</div>
+                            <div className="grid grid-cols-[40px_repeat(7,1fr)] sm:grid-cols-[50px_repeat(7,1fr)] border-b border-slate-800 bg-[#0B1120] sticky top-0 z-10 min-w-[500px]">
+                                <div className="border-r border-slate-800 p-1 sm:p-2 text-[8px] sm:text-[10px] text-slate-500 text-center font-bold">{t.allDay}</div>
                                 {t.days.map(day => (
-                                    <div key={day} className="border-r border-slate-800 p-2 text-xs text-slate-400 text-center uppercase tracking-wider">{day}</div>
+                                    <div key={day} className="border-r border-slate-800 p-1 sm:p-2 text-[9px] sm:text-xs text-slate-400 text-center uppercase tracking-wider">{day}</div>
                                 ))}
                             </div>
 
                             {/* Time Grid */}
-                            <div className="grid grid-cols-[50px_repeat(7,1fr)] relative min-w-[600px]">
+                            <div className="grid grid-cols-[40px_repeat(7,1fr)] sm:grid-cols-[50px_repeat(7,1fr)] relative min-w-[500px]">
                                 {/* Time Labels */}
                                 <div className="border-r border-slate-800 bg-[#0B1120]">
                                     {[7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].map(hour => (
@@ -216,7 +216,7 @@ export function CalendarBookingDemo() {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         exit={{ opacity: 0, x: -20 }}
-                        className="flex flex-col h-full p-6 sm:p-12 items-center justify-center bg-[#0B1120]"
+                        className="flex flex-col h-full p-4 sm:p-6 md:p-12 items-center justify-center bg-[#0B1120]"
                     >
                         <div className="w-full max-w-2xl bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[400px]">
                             {/* Left Side: Info */}
