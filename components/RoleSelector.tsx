@@ -38,6 +38,7 @@ export function RoleSelector() {
                     <button
                         key={r}
                         onClick={() => setRole(r)}
+                        aria-pressed={role === r}
                         className={`relative shrink-0 px-3 md:px-6 py-2 md:py-2.5 text-[11px] md:text-sm font-medium rounded-full transition-all duration-300 whitespace-nowrap ${role === r ? 'text-white shadow-[0_0_20px_rgba(255,255,255,0.2)]' : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
                             }`}
                     >

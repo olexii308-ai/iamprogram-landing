@@ -525,9 +525,9 @@ export function ClientProfileDemo() {
                     </div>
 
                     {/* Interactive Charts Area */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4">
                         {/* Mood Dynamics with Gradient Area */}
-                        <div className="p-5 rounded-xl bg-slate-900 border border-slate-800 flex flex-col justify-between h-48">
+                        <div className="p-4 sm:p-5 rounded-xl bg-slate-900 border border-slate-800 flex flex-col justify-between h-40 sm:h-48">
                             <div className="flex justify-between items-center mb-4">
                                 <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">{t.chartMood}</div>
                                 <div className="text-[10px] px-2 py-0.5 bg-emerald-500/10 text-emerald-500 rounded font-mono">+15%</div>
@@ -556,7 +556,7 @@ export function ClientProfileDemo() {
                         </div>
 
                         {/* Sleep vs Anxiety Scatter */}
-                        <div className="p-5 rounded-xl bg-slate-900 border border-slate-800 flex flex-col h-48">
+                        <div className="p-4 sm:p-5 rounded-xl bg-slate-900 border border-slate-800 flex flex-col h-40 sm:h-48">
                             <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">{t.chartSleep}</div>
                             <div className="flex-1 relative border-l border-b border-slate-700 m-2">
                                 {/* Data points */}
@@ -588,18 +588,18 @@ export function ClientProfileDemo() {
                     </div>
 
                     {/* Completion / Progress */}
-                    <div className="grid grid-cols-3 gap-4">
-                        <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-center">
-                            <div className="text-2xl font-bold text-white mb-1">85%</div>
-                            <div className="text-[10px] text-slate-500 uppercase">{t.attendance}</div>
+                    <div className="grid grid-cols-3 gap-2 sm:gap-4">
+                        <div className="p-3 sm:p-4 rounded-xl bg-slate-900 border border-slate-800 text-center">
+                            <div className="text-xl sm:text-2xl font-bold text-white mb-1">85%</div>
+                            <div className="text-[9px] sm:text-[10px] text-slate-500 uppercase">{t.attendance}</div>
                         </div>
-                        <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-center">
-                            <div className="text-2xl font-bold text-white mb-1">9/12</div>
-                            <div className="text-[10px] text-slate-500 uppercase">{t.homework}</div>
+                        <div className="p-3 sm:p-4 rounded-xl bg-slate-900 border border-slate-800 text-center">
+                            <div className="text-xl sm:text-2xl font-bold text-white mb-1">9/12</div>
+                            <div className="text-[9px] sm:text-[10px] text-slate-500 uppercase">{t.homework}</div>
                         </div>
-                        <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-center">
-                            <div className="text-2xl font-bold text-emerald-400 mb-1">-40%</div>
-                            <div className="text-[10px] text-slate-500 uppercase">{t.gadLevel}</div>
+                        <div className="p-3 sm:p-4 rounded-xl bg-slate-900 border border-slate-800 text-center">
+                            <div className="text-xl sm:text-2xl font-bold text-emerald-400 mb-1">-40%</div>
+                            <div className="text-[9px] sm:text-[10px] text-slate-500 uppercase">{t.gadLevel}</div>
                         </div>
                     </div>
                 </div>
@@ -657,12 +657,12 @@ export function ClientProfileDemo() {
             </div>
 
             <div className="relative">
-                <div className="flex items-center px-4 sm:px-6 border-b border-slate-800 bg-[#0B1120] overflow-x-auto no-scrollbar">
+                <div className="flex items-center px-2 sm:px-6 border-b border-slate-800 bg-[#0B1120] overflow-x-auto no-scrollbar">
                     {t.tabs.map((tabLabel, idx) => (
                         <button
                             key={idx}
                             onClick={() => setActiveTabIdx(idx)}
-                            className={`px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${activeTabIdx === idx
+                            className={`px-2 sm:px-4 py-2 sm:py-3 text-[10px] sm:text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${activeTabIdx === idx
                                 ? 'text-emerald-500 border-emerald-500'
                                 : 'text-slate-500 border-transparent hover:text-slate-300'
                                 }`}
@@ -671,7 +671,8 @@ export function ClientProfileDemo() {
                         </button>
                     ))}
                 </div>
-                {/* Mobile scroll hint for tabs */}
+                {/* Scroll indicators on both sides */}
+                <div className="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-[#0B1120] to-transparent pointer-events-none sm:hidden" />
                 <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[#0B1120] to-transparent pointer-events-none sm:hidden" />
             </div>
 

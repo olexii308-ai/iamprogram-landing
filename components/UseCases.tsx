@@ -8,6 +8,7 @@ import { content } from '../lib/content';
 import { VideoWorkspaceDemo } from './demos/VideoWorkspaceDemo';
 import { AIChatDemo } from './demos/AIChatDemo';
 import { SecurityDemo } from './demos/SecurityDemo';
+import { SecurityLockDemo } from './demos/SecurityLockDemo';
 import { ClientProfileDemo } from './demos/ClientProfileDemo';
 import { ToolsCatalogDemo } from './demos/ToolsCatalogDemo';
 import { CalendarBookingDemo } from './demos/CalendarBookingDemo';
@@ -42,6 +43,7 @@ export function UseCases() {
             case 'voice-supervisor': return <VoiceSupervisorDemo />;
             case 'ai-chat': return <AIChatDemo />;
             case 'secure-dashboard': return <SecurityDemo />;
+            case 'security-lock': return <SecurityLockDemo />;
             default: return null;
         }
     };
@@ -156,7 +158,7 @@ export function UseCases() {
 
                             {/* Window Content */}
                             <div
-                                className="relative bg-[#020617] p-1 h-[400px] sm:h-[450px] md:h-auto md:aspect-[4/3] overflow-hidden group/stage"
+                                className="relative bg-[#020617] p-1 h-[520px] sm:h-[550px] md:h-auto md:aspect-[4/3] overflow-y-auto overflow-x-hidden group/stage"
                                 ref={tapHint.ref as any}
                                 onClickCapture={tapHint.dismissHint}
                             >

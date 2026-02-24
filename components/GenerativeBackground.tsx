@@ -47,7 +47,7 @@ export function GenerativeBackground() {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 1.5 }}
-                        className="absolute inset-0 w-full h-full object-cover"
+                        className="absolute inset-0 w-full h-full overflow-hidden [&>svg]:w-full [&>svg]:h-full [&>svg]:object-cover [&>svg]:min-w-full [&>svg]:min-h-full"
                         dangerouslySetInnerHTML={{ __html: svgContent }}
                     />
                 ) : (
@@ -61,9 +61,9 @@ export function GenerativeBackground() {
                     >
                         {/* Premium Fallback Gradients */}
                         <div className={`absolute inset-0 opacity-40 mix-blend-screen transition-colors duration-1000 ${role === 'therapist' ? 'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-blue-900 via-slate-900 to-teal-900' :
-                                role === 'clinic' ? 'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-emerald-900 via-slate-900 to-cyan-900' :
-                                    role === 'student' ? 'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-indigo-900 via-purple-900 to-slate-900' :
-                                        'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-800 to-slate-900'
+                            role === 'clinic' ? 'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-emerald-900 via-slate-900 to-cyan-900' :
+                                role === 'student' ? 'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-indigo-900 via-purple-900 to-slate-900' :
+                                    'bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-slate-900 via-slate-800 to-slate-900'
                             }`} />
 
                         {/* Animated Mesh/Orbs */}
@@ -75,7 +75,7 @@ export function GenerativeBackground() {
 
             {/* Overlay for readability */}
             <div className="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/40 to-slate-950" />
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150" />
+            <div className="absolute inset-0 bg-noise mix-blend-overlay" />
         </div>
     );
 }

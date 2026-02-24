@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLanguage } from './LanguageCtx';
 import { useRole } from './RoleContext';
 import { commonContent } from '../lib/content';
@@ -91,7 +92,10 @@ export function Footer() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 pb-8 border-b border-white/5">
                     <div>
-                        <h3 className="text-white font-semibold mb-3">bravery.academy</h3>
+                        <div className="flex items-center gap-3 mb-3">
+                            <Image src="/logo.png" alt="bravery.academy logo" width={36} height={36} className="invert" />
+                            <h3 className="text-white font-semibold">bravery.academy</h3>
+                        </div>
                         <p className="text-slate-400 leading-relaxed max-w-sm">
                             {copy.brandDescription}
                         </p>
@@ -135,7 +139,7 @@ export function Footer() {
 
                 <div className="pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <p>© {new Date().getFullYear()} bravery.academy. {copy.rights}</p>
-                    <p className="text-xs text-slate-500">{t.footer}</p>
+                    <p className="text-xs text-slate-400">{t.footer}</p>
                 </div>
             </div>
         </footer>

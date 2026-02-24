@@ -51,7 +51,7 @@ export function SecurityLockDemo() {
     };
 
     return (
-        <div className="w-full h-full min-h-[350px] sm:min-h-[500px] bg-black text-slate-300 font-sans selection:bg-emerald-500/30 flex flex-col items-center justify-center rounded-xl overflow-hidden border border-slate-900 shadow-2xl relative">
+        <div className="w-full h-full min-h-[300px] bg-black text-slate-300 font-sans selection:bg-emerald-500/30 flex flex-col items-center justify-center rounded-xl overflow-hidden border border-slate-900 shadow-2xl relative">
 
             {/* Background Effects */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-900/50 via-black to-black pointer-events-none" />
@@ -63,15 +63,15 @@ export function SecurityLockDemo() {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 1.05, filter: 'blur(10px)' }}
-                        className="relative z-10 w-full max-w-md p-8"
+                        className="relative z-10 w-full max-w-md p-4 sm:p-8"
                     >
                         <div className="bg-[#1E293B] border border-slate-700 rounded-2xl shadow-2xl overflow-hidden">
                             {/* Header */}
-                            <div className="p-6 text-center border-b border-slate-700/50">
+                            <div className="p-4 sm:p-6 text-center border-b border-slate-700/50">
                                 <motion.div
                                     initial={{ y: -10 }}
                                     animate={{ y: 0 }}
-                                    className="text-4xl mb-4"
+                                    className="text-3xl sm:text-4xl mb-2 sm:mb-4"
                                 >
                                     🔐
                                 </motion.div>
@@ -80,7 +80,7 @@ export function SecurityLockDemo() {
                             </div>
 
                             {/* Body */}
-                            <div className="p-6 space-y-6 bg-[#162032]">
+                            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 bg-[#162032]">
                                 <div className="space-y-2">
                                     <label className="text-xs font-medium text-slate-400 uppercase tracking-wider">{t.passwordLabel}</label>
                                     <div className="relative">
@@ -88,7 +88,7 @@ export function SecurityLockDemo() {
                                             type="password"
                                             value={password}
                                             onChange={(e) => setPassword(e.target.value)}
-                                            className="w-full bg-[#0F172A] border border-emerald-500/50 rounded-lg py-3 px-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all font-mono tracking-widest"
+                                            className="w-full bg-[#0F172A] border border-emerald-500/50 rounded-lg py-2.5 sm:py-3 px-4 text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 transition-all font-mono tracking-widest text-sm"
                                             placeholder={t.placeholder}
                                         />
                                         <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">

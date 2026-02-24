@@ -57,6 +57,7 @@ export function FAQ() {
                                 <button
                                     type="button"
                                     onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                                    aria-expanded={isOpen}
                                     className="w-full text-left px-5 py-4 flex items-center justify-between gap-4"
                                 >
                                     <span className="font-semibold text-white text-sm sm:text-base pr-2">{item.question}</span>
@@ -72,6 +73,7 @@ export function FAQ() {
                                             animate={{ height: 'auto', opacity: 1 }}
                                             exit={{ height: 0, opacity: 0 }}
                                             transition={{ duration: 0.25 }}
+                                            role="region"
                                         >
                                             <div className="px-5 pb-4 text-slate-300 leading-relaxed">
                                                 {item.answer}

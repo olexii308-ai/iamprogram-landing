@@ -240,22 +240,22 @@ export function ToolsCatalogDemo() {
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-emerald-500/5 pointer-events-none" />
 
             {/* Header */}
-            <div className="p-4 sm:p-6 border-b border-slate-800 z-10 w-full">
-                <h2 className="text-xl font-bold text-white mb-1">{t.title}</h2>
-                <div className="text-sm text-slate-500">{t.subtitle}</div>
+            <div className="p-3 sm:p-6 border-b border-slate-800 z-10 w-full">
+                <h2 className="text-lg sm:text-xl font-bold text-white mb-0.5 sm:mb-1">{t.title}</h2>
+                <div className="text-xs sm:text-sm text-slate-500 hidden sm:block">{t.subtitle}</div>
 
-                <div className="flex flex-col md:flex-row gap-4 mt-6">
+                <div className="flex flex-col md:flex-row gap-2 sm:gap-4 mt-3 sm:mt-6">
                     <div className="flex gap-2">
-                        <button className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition-colors shadow-lg shadow-emerald-500/20 flex items-center gap-2">
+                        <button className="px-3 sm:px-4 py-1.5 sm:py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs sm:text-sm font-medium transition-colors shadow-lg shadow-emerald-500/20 flex items-center gap-1.5 sm:gap-2">
                             <span>🚀</span> {t.btnTools} ({tools.length})
                         </button>
-                        <button className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition-colors border border-slate-700 flex items-center gap-2">
+                        <button className="px-3 sm:px-4 py-1.5 sm:py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs sm:text-sm font-medium transition-colors border border-slate-700 flex items-center gap-1.5 sm:gap-2">
                             <span>☑️</span> {t.btnChecklists} (3)
                         </button>
                     </div>
                 </div>
 
-                <div className="mt-6 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
+                <div className="mt-4 sm:mt-6 flex flex-col md:flex-row gap-3 sm:gap-4 justify-between items-start md:items-center">
                     {/* Search */}
                     <div className="relative w-full max-w-sm">
                         <input
@@ -268,27 +268,30 @@ export function ToolsCatalogDemo() {
                         <span className="absolute right-3 top-2.5 text-slate-500">🔍</span>
                     </div>
 
-                    {/* Filters */}
-                    <div className="flex gap-2 overflow-x-auto no-scrollbar w-full md:w-auto pb-2 md:pb-0">
-                        {t.categories.map(cat => (
-                            <button
-                                key={cat.id}
-                                onClick={() => setActiveFilter(cat.id)}
-                                className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors border ${activeFilter === cat.id
-                                    ? 'bg-emerald-500 text-white border-emerald-500'
-                                    : 'bg-slate-800 text-slate-400 border-slate-700 hover:border-slate-600 hover:text-slate-200'
-                                    }`}
-                            >
-                                {cat.label}
-                            </button>
-                        ))}
+                    {/* Filters with scroll hint */}
+                    <div className="relative w-full md:w-auto">
+                        <div className="flex gap-2 overflow-x-auto no-scrollbar w-full pb-2 md:pb-0 pr-6 md:pr-0">
+                            {t.categories.map(cat => (
+                                <button
+                                    key={cat.id}
+                                    onClick={() => setActiveFilter(cat.id)}
+                                    className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors border ${activeFilter === cat.id
+                                        ? 'bg-emerald-500 text-white border-emerald-500'
+                                        : 'bg-slate-800 text-slate-400 border-slate-700 hover:border-slate-600 hover:text-slate-200'
+                                        }`}
+                                >
+                                    {cat.label}
+                                </button>
+                            ))}
+                        </div>
+                        <div className="absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[#0B1120] to-transparent pointer-events-none md:hidden" />
                     </div>
                 </div>
             </div>
 
             {/* Grid */}
-            <div className="flex-1 overflow-y-auto p-4 sm:p-6 z-10 bg-[#0B1120]">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="flex-1 overflow-y-auto p-3 sm:p-6 z-10 bg-[#0B1120]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                     {filteredTools.map((tool) => (
                         <motion.div
                             key={tool.id}

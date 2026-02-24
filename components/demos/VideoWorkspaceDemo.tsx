@@ -97,7 +97,14 @@ export function VideoWorkspaceDemo() {
     const { language } = useLanguage();
     const t = uiText[language];
 
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+    // Open sidebar by default on desktop only
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+            setIsSidebarOpen(true);
+        }
+    }, []);
     const [activeTab, setActiveTab] = useState('notes');
     const [timer] = useState('48:12');
 
@@ -237,7 +244,7 @@ export function VideoWorkspaceDemo() {
     }
 
     return (
-        <div className="relative w-full aspect-[3/4] sm:aspect-square md:aspect-video bg-slate-950 rounded-xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col md:flex-row font-sans selection:bg-indigo-500/30">
+        <div className="relative w-full h-full min-h-[400px] bg-slate-950 rounded-xl overflow-hidden border border-slate-800 shadow-2xl flex flex-col font-sans selection:bg-indigo-500/30">
             {/* Main Video Area */}
             <div className="flex-1 relative bg-slate-900 overflow-hidden group">
                 {/* Simulated Video Feed (Client) */}
@@ -277,14 +284,14 @@ export function VideoWorkspaceDemo() {
                 </div>
 
                 {/* Simulated Self View */}
-                <div className="absolute bottom-4 right-4 w-32 h-24 bg-slate-800 rounded-lg border border-slate-700 shadow-2xl overflow-hidden hidden md:flex items-center justify-center group/pip hover:scale-105 transition-transform cursor-pointer">
-                    <span className="text-2xl">👨‍⚕️</span>
-                    <div className="absolute bottom-1 left-1 text-[8px] bg-black/60 px-1.5 rounded text-white backdrop-blur-sm">{t.selfMuted}</div>
+                <div className="absolute bottom-16 sm:bottom-20 right-3 sm:right-4 w-20 h-16 sm:w-32 sm:h-24 bg-slate-800 rounded-lg border border-slate-700 shadow-2xl overflow-hidden flex items-center justify-center group/pip hover:scale-105 transition-transform cursor-pointer z-10">
+                    <span className="text-xl sm:text-2xl">👨‍⚕️</span>
+                    <div className="absolute bottom-1 left-1 text-[7px] sm:text-[8px] bg-black/60 px-1 sm:px-1.5 rounded text-white backdrop-blur-sm">{t.selfMuted}</div>
                     <div className="absolute inset-0 bg-black/0 group-hover/pip:bg-black/20 transition-colors" />
                 </div>
 
                 {/* Top Right Widgets */}
-                <div className="absolute top-4 right-4 hidden md:flex flex-col items-end gap-2">
+                <div className="absolute top-4 right-4 hidden sm:flex flex-col items-end gap-2">
                     <div className="bg-slate-900/90 backdrop-blur-md px-4 py-2.5 rounded-xl border border-indigo-500/30 shadow-lg flex items-center gap-3">
                         <div className="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400">
                             ⏱️
@@ -299,26 +306,21 @@ export function VideoWorkspaceDemo() {
                 </div>
 
                 {/* Floating Controls Bar */}
-                <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 sm:gap-4 p-2 sm:p-2.5 rounded-2xl bg-slate-950/90 backdrop-blur-xl border border-white/10 shadow-2xl z-10 transition-all duration-300 hover:scale-105 hover:bg-slate-950">
-                    <button className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-white transition-all border border-white/5 hover:border-white/20 active:scale-95">
+                <div className="absolute bottom-3 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-1.5 sm:gap-4 p-1.5 sm:p-2.5 rounded-2xl bg-slate-950/90 backdrop-blur-xl border border-white/10 shadow-2xl z-10 transition-all duration-300">
+                    <button aria-label="Microphone" className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-white transition-all border border-white/5 hover:border-white/20 active:scale-95">
                         🎤
                     </button>
-                    <button className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-white transition-all border border-white/5 hover:border-white/20 active:scale-95">
+                    <button aria-label="Camera" className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-slate-800 hover:bg-slate-700 flex items-center justify-center text-white transition-all border border-white/5 hover:border-white/20 active:scale-95">
                         📹
                     </button>
-                    <div className="w-px h-6 bg-white/10 my-auto" />
+                    <div className="w-px h-6 bg-white/10 my-auto hidden sm:block" />
                     <button
                         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                         className={`w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition-all border ${isSidebarOpen ? 'bg-indigo-600 text-white border-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.3)]' : 'bg-slate-800 text-slate-400 hover:text-white border-white/5'}`}
                     >
                         🛠️
                     </button>
-                    <button className="w-11 h-11 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-500 flex items-center justify-center transition-all border border-emerald-500/20">
-                        😊
-                    </button>
-                    <button
-                        className="w-12 h-11 rounded-xl bg-red-500 hover:bg-red-600 text-white flex items-center justify-center transition-all shadow-[0_0_20px_rgba(239,68,68,0.4)] hover:shadow-[0_0_30px_rgba(239,68,68,0.6)] active:scale-95 ml-2"
-                    >
+                    <button aria-label="End call" className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-red-500 hover:bg-red-600 text-white flex items-center justify-center transition-all shadow-[0_0_15px_rgba(239,68,68,0.3)] active:scale-95">
                         📞
                     </button>
                 </div>
@@ -328,11 +330,11 @@ export function VideoWorkspaceDemo() {
             <AnimatePresence mode="wait">
                 {isSidebarOpen && (
                     <motion.div
-                        initial={{ width: 0, opacity: 0 }}
-                        animate={{ width: '100%', opacity: 1 }}
-                        exit={{ width: 0, opacity: 0 }}
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: '45%', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
                         transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                        className="h-full md:max-w-[340px] bg-[#0B1120] border-l border-slate-800 flex flex-col shadow-2xl relative z-20"
+                        className="absolute bottom-0 left-0 right-0 sm:relative sm:h-full sm:max-w-[340px] bg-[#0B1120] border-t sm:border-t-0 sm:border-l border-slate-800 flex flex-col shadow-2xl z-30 rounded-t-2xl sm:rounded-t-none overflow-hidden"
                     >
                         {/* Panel Header */}
                         <div className="h-14 border-b border-slate-800 flex items-center justify-between px-4 bg-[#0F172A]">

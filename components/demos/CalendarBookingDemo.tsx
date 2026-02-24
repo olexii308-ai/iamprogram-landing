@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../LanguageCtx';
 
@@ -69,6 +69,15 @@ export function CalendarBookingDemo() {
 
     const [view, setView] = useState<'calendar' | 'booking'>('calendar');
     const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+    const [cellH, setCellH] = useState(64);
+
+    // Detect mobile for cell height (SSR-safe)
+    useEffect(() => {
+        const update = () => setCellH(window.innerWidth < 640 ? 40 : 64);
+        update();
+        window.addEventListener('resize', update);
+        return () => window.removeEventListener('resize', update);
+    }, []);
 
     // Mock Calendar Events
     const events = [
@@ -154,19 +163,19 @@ export function CalendarBookingDemo() {
                         {/* Calendar Grid */}
                         <div className="flex-1 overflow-auto relative">
                             {/* Header Row */}
-                            <div className="grid grid-cols-[40px_repeat(7,1fr)] sm:grid-cols-[50px_repeat(7,1fr)] border-b border-slate-800 bg-[#0B1120] sticky top-0 z-10 min-w-[500px]">
-                                <div className="border-r border-slate-800 p-1 sm:p-2 text-[8px] sm:text-[10px] text-slate-500 text-center font-bold">{t.allDay}</div>
+                            <div className="grid grid-cols-[30px_repeat(7,1fr)] sm:grid-cols-[50px_repeat(7,1fr)] border-b border-slate-800 bg-[#0B1120] sticky top-0 z-10">
+                                <div className="border-r border-slate-800 p-1 text-[7px] sm:text-[10px] text-slate-500 text-center font-bold">{t.allDay}</div>
                                 {t.days.map(day => (
-                                    <div key={day} className="border-r border-slate-800 p-1 sm:p-2 text-[9px] sm:text-xs text-slate-400 text-center uppercase tracking-wider">{day}</div>
+                                    <div key={day} className="border-r border-slate-800 p-0.5 sm:p-2 text-[7px] sm:text-xs text-slate-400 text-center uppercase tracking-wider truncate">{day}</div>
                                 ))}
                             </div>
 
                             {/* Time Grid */}
-                            <div className="grid grid-cols-[40px_repeat(7,1fr)] sm:grid-cols-[50px_repeat(7,1fr)] relative min-w-[500px]">
+                            <div className="grid grid-cols-[30px_repeat(7,1fr)] sm:grid-cols-[50px_repeat(7,1fr)] relative">
                                 {/* Time Labels */}
                                 <div className="border-r border-slate-800 bg-[#0B1120]">
                                     {[7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].map(hour => (
-                                        <div key={hour} className="h-16 border-b border-slate-800/50 text-[10px] text-slate-600 text-center pt-1">
+                                        <div key={hour} className="h-10 sm:h-16 border-b border-slate-800/50 text-[8px] sm:text-[10px] text-slate-600 text-center pt-0.5 sm:pt-1">
                                             {hour}:00
                                         </div>
                                     ))}
@@ -176,7 +185,7 @@ export function CalendarBookingDemo() {
                                 {[0, 1, 2, 3, 4, 5, 6].map(day => (
                                     <div key={day} className="border-r border-slate-800 relative">
                                         {[7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].map(hour => (
-                                            <div key={hour} className="h-16 border-b border-slate-800/50"></div>
+                                            <div key={hour} className="h-10 sm:h-16 border-b border-slate-800/50"></div>
                                         ))}
 
                                         {/* Events */}
@@ -185,17 +194,17 @@ export function CalendarBookingDemo() {
                                                 key={event.id}
                                                 initial={{ opacity: 0, scale: 0.9 }}
                                                 animate={{ opacity: 1, scale: 1 }}
-                                                className={`absolute left-1 right-1 rounded p-2 text-xs overflow-hidden border cursor-pointer hover:brightness-110 transition-all z-10 ${event.type === 'session'
+                                                className={`absolute left-0.5 right-0.5 sm:left-1 sm:right-1 rounded p-1 sm:p-2 text-[8px] sm:text-xs overflow-hidden border cursor-pointer hover:brightness-110 transition-all z-10 ${event.type === 'session'
                                                     ? 'bg-blue-600 border-blue-500 text-white'
                                                     : 'bg-indigo-600 border-indigo-500 text-white'
                                                     }`}
                                                 style={{
-                                                    top: `${(event.start - 7) * 64}px`, // 64px per hour
-                                                    height: `${event.duration * 64}px`
+                                                    top: `${(event.start - 7) * cellH}px`,
+                                                    height: `${event.duration * cellH}px`
                                                 }}
                                             >
-                                                <div className="font-bold truncate">{event.title}</div>
-                                                <div className="text-[9px] opacity-80 mt-1">
+                                                <div className="font-bold truncate text-[7px] sm:text-xs">{event.title}</div>
+                                                <div className="text-[6px] sm:text-[9px] opacity-80 mt-0.5 sm:mt-1 hidden sm:block">
                                                     {event.type === 'session' ? t.planned : t.study}
                                                 </div>
                                             </motion.div>
@@ -204,7 +213,7 @@ export function CalendarBookingDemo() {
                                 ))}
 
                                 {/* Current Time Line */}
-                                <div className="absolute left-[50px] right-0 border-t border-red-500/50 z-20 pointer-events-none" style={{ top: '560px' }}> {/* 15:45 approx */}
+                                <div className="absolute left-[30px] sm:left-[50px] right-0 border-t border-red-500/50 z-20 pointer-events-none" style={{ top: `${(15.75 - 7) * cellH}px` }}>
                                     <div className="absolute -left-1 -top-1 w-2 h-2 bg-red-500 rounded-full"></div>
                                 </div>
                             </div>
@@ -261,7 +270,7 @@ export function CalendarBookingDemo() {
 
                                 {/* Time Slots */}
                                 <div className="mb-2 text-xs text-slate-500 font-bold uppercase tracking-wider">{t.availableSlots}</div>
-                                <div className="grid grid-cols-3 gap-3">
+                                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
                                     {['07:00', '08:05', '09:10', '12:00', '13:05', '14:10'].map(time => (
                                         <button
                                             key={time}

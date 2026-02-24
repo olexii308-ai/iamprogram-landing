@@ -59,7 +59,7 @@ export function SecurityDemo() {
     };
 
     return (
-        <div className="w-full h-full min-h-[300px] bg-slate-900 rounded-xl overflow-hidden border border-slate-800 shadow-2xl p-6 flex flex-col gap-6">
+        <div className="w-full h-full min-h-[300px] bg-slate-900 rounded-xl overflow-hidden border border-slate-800 shadow-2xl p-4 sm:p-6 flex flex-col gap-4 sm:gap-6">
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -75,11 +75,11 @@ export function SecurityDemo() {
             </div>
 
             {/* Split View: Local vs Server */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                 {/* Local View */}
                 <div className="space-y-2">
-                    <div className="text-xs font-mono text-indigo-400 uppercase tracking-wider">{t.localTitle}</div>
-                    <div className="h-full bg-slate-800 rounded-lg p-4 border border-indigo-500/30 shadow-[0_0_15px_rgba(99,102,241,0.1)] relative group">
+                    <div className="text-[10px] sm:text-xs font-mono text-indigo-400 uppercase tracking-wider">{t.localTitle}</div>
+                    <div className="min-h-[100px] sm:min-h-[120px] bg-slate-800 rounded-lg p-3 sm:p-4 border border-indigo-500/30 shadow-[0_0_15px_rgba(99,102,241,0.1)] relative group">
                         <textarea
                             value={text}
                             onChange={(e) => { setText(e.target.value); triggerSync(); }}
@@ -92,8 +92,8 @@ export function SecurityDemo() {
 
                 {/* Server View */}
                 <div className="space-y-2">
-                    <div className="text-xs font-mono text-slate-500 uppercase tracking-wider">{t.serverTitle}</div>
-                    <div className="h-full bg-slate-950 rounded-lg p-4 border border-slate-800 relative overflow-hidden">
+                    <div className="text-[10px] sm:text-xs font-mono text-slate-500 uppercase tracking-wider">{t.serverTitle}</div>
+                    <div className="min-h-[100px] sm:min-h-[120px] bg-slate-950 rounded-lg p-3 sm:p-4 border border-slate-800 relative overflow-hidden">
                         <div className="font-mono text-xs text-emerald-700 break-all leading-relaxed select-none blur-[0.5px]">
                             {encrypted}
                         </div>

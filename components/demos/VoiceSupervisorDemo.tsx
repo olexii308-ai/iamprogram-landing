@@ -418,7 +418,7 @@ export const VoiceSupervisorDemo = () => {
             </div>
 
             {/* Chat Area */}
-            <div ref={chatRef} className="flex-1 overflow-y-auto p-6 space-y-4">
+            <div ref={chatRef} className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
                 {messages.length === 0 && (
                     <div className="text-center py-8">
                         <div className="text-5xl mb-4">🧠</div>
@@ -483,11 +483,11 @@ export const VoiceSupervisorDemo = () => {
             </AnimatePresence>
 
             {/* Visualizer + Mic */}
-            <div className="border-t border-white/5 bg-slate-950/80 px-6 py-5">
+            <div className="border-t border-white/5 bg-slate-950/80 px-4 sm:px-6 py-3 sm:py-5">
                 {/* Visualizer */}
                 <div className={`h-16 mb-4 rounded-lg overflow-hidden transition-opacity duration-300 ${status === 'recording' ? 'opacity-100' : 'opacity-10'
                     }`}>
-                    <canvas ref={canvasRef} width={600} height={64} className="w-full h-full" />
+                    <canvas ref={canvasRef} className="w-full h-full" style={{ maxWidth: '100%' }} />
                 </div>
 
                 {/* Mic Button */}
