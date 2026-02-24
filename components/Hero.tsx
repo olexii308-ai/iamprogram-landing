@@ -9,7 +9,6 @@ import { GenerativeBackground } from './GenerativeBackground';
 import { WaitlistModal } from './WaitlistModal';
 import { LanguageSwitch } from './LanguageSwitch';
 import { useHints } from '../hooks/useHints';
-import { TextHint } from './ui/TextHint';
 
 export function Hero() {
     const { role } = useRole();
@@ -125,8 +124,17 @@ export function Hero() {
             </div>
 
             {/* Scroll Indicator Hint */}
-            <div ref={scrollHint.ref as any} className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
-                {scrollHint.showHint && <TextHint type="scroll" language={language} onDismiss={scrollHint.dismissHint} />}
+            <div ref={scrollHint.ref as any} className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
+                {scrollHint.showHint && (
+                    <motion.svg
+                        className="w-6 h-6 sm:w-8 sm:h-8 text-white/30"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        animate={{ y: [0, 8, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7-7-7" />
+                    </motion.svg>
+                )}
             </div>
 
             {/* Decorative Bottom Fade */}

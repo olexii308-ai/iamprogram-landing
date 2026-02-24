@@ -13,25 +13,19 @@ import { ToolsCatalogDemo } from './demos/ToolsCatalogDemo';
 import { CalendarBookingDemo } from './demos/CalendarBookingDemo';
 import { VoiceSupervisorDemo } from './demos/VoiceSupervisorDemo';
 import { useHints } from '../hooks/useHints';
-import { TextHint } from './ui/TextHint';
 import { SpotlightHighlight } from './ui/SpotlightHighlight';
+import { PremiumPulse } from './ui/PremiumPulse';
+import { InlineHint } from './ui/InlineHint';
 
 export function UseCases() {
     const { language } = useLanguage();
     const { role } = useRole();
     const t = content[language][role];
     const [activeCaseIndex, setActiveCaseIndex] = useState(0);
-    const [showHint, setShowHint] = useState(true);
 
-    // AI Supervisor V2 Hint System
+    // AI Supervisor Hub (V4 Hints)
     const swipeHint = useHints('usecases-swipe');
     const tapHint = useHints('usecases-tap');
-
-    // Hide global interaction hint overlay after 10 seconds (legacy hint fallback)
-    useEffect(() => {
-        const timer = setTimeout(() => setShowHint(false), 10000);
-        return () => clearTimeout(timer);
-    }, []);
 
     const activeCase = t.useCases[activeCaseIndex];
 
@@ -78,81 +72,42 @@ export function UseCases() {
                             ? 'Спробуйте інтерактивні демо наших ключових можливостей для вашої ролі.'
                             : 'Explore interactive demos of our key features, tailored to your role.'}
                     </p>
-
-                    {/* Interaction Hint Animation */}
-                    <AnimatePresence>
-                        {showHint && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -10 }}
-                                transition={{ duration: 0.5 }}
-                                className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-2 text-emerald-400 text-sm font-medium animate-bounce"
-                            >
-                                <span>👆</span>
-                                <span>{language === 'uk' ? 'Спробуйте клікнути!' : 'Try clicking!'}</span>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
                 </motion.div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
-                    {/* Scenarios Menu — horizontal scroll on mobile, vertical sidebar on lg+ */}
-                    <div className="lg:col-span-4 relative group">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start">
+                    {/* Scenarios Menu — horizontal scroll on mobile, vertical sidebar on md+ */}
+                    <div className="md:col-span-5 lg:col-span-4 relative group">
                         {/* Mobile: horizontal scrollable strip */}
                         <div
                             ref={swipeHint.ref as any}
                             onScroll={swipeHint.dismissHint}
-                            className="flex lg:flex-col gap-2 lg:gap-3 overflow-x-auto lg:overflow-x-visible no-scrollbar pb-2 lg:pb-0 -mx-4 px-4 lg:mx-0 lg:px-0 snap-x snap-mandatory lg:snap-none relative"
+                            className="flex md:flex-col gap-3 md:gap-4 overflow-x-auto md:overflow-x-visible no-scrollbar pb-4 md:pb-0 -mx-4 px-4 md:mx-0 md:px-0 snap-x snap-mandatory md:snap-none relative"
                         >
-                            {/* V3 Text Swipe Hint */}
-                            {swipeHint.showHint && (
-                                <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex items-center justify-center lg:hidden z-20 pointer-events-auto">
-                                    <TextHint
-                                        type="swipe-horizontal"
-                                        language={language}
-                                        onDismiss={swipeHint.dismissHint}
-                                    />
-                                </div>
-                            )}
-
-                            {/* Finger pointing hint overlay for first item (Legacy Desktop) */}
-                            <AnimatePresence>
-                                {showHint && (
-                                    <motion.div
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        exit={{ opacity: 0, x: -20 }}
-                                        className="absolute top-8 -left-12 z-50 text-4xl hidden lg:block"
-                                    >
-                                        👉
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+                            {/* In V4 we rely purely on layout (Peeking 80% width cards) + user intuition for swiping. No overlays clashing with the UI. */}
 
                             {t.useCases.map((useCase, index) => (
                                 <button
                                     key={useCase.id}
                                     onClick={() => {
                                         setActiveCaseIndex(index);
-                                        if (window.innerWidth >= 1024) swipeHint.dismissHint(); // Dismiss on desktop click as well
+                                        if (window.innerWidth >= 768) swipeHint.dismissHint(); // Dismiss on tablet/desktop click
                                     }}
-                                    className={`snap-center lg:snap-align-none text-left p-3 lg:p-5 rounded-xl border transition-all duration-300 group relative overflow-hidden shrink-0 w-[200px] sm:w-[240px] lg:w-full ${activeCaseIndex === index
+                                    className={`snap-center md:snap-align-none text-left p-4 md:p-5 rounded-xl border transition-all duration-300 group relative overflow-hidden shrink-0 w-[240px] sm:w-[280px] md:w-full ${activeCaseIndex === index
                                         ? 'bg-gradient-to-r from-slate-800 to-slate-900 border-indigo-500/50 shadow-lg shadow-indigo-500/10'
                                         : 'bg-slate-900/20 border-white/5 hover:bg-slate-800/40 hover:border-white/10'
                                         }`}
                                 >
-                                    <div className="flex items-start gap-3 lg:gap-4 relative z-10">
-                                        <div className={`w-10 h-10 lg:w-12 lg:h-12 rounded-lg flex items-center justify-center text-xl lg:text-2xl transition-colors shrink-0 ${activeCaseIndex === index ? 'bg-indigo-500/20 text-white' : 'bg-slate-800 text-slate-500 group-hover:text-slate-300'
+                                    <div className="flex items-start gap-3 md:gap-4 relative z-10">
+                                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center text-2xl transition-colors shrink-0 ${activeCaseIndex === index ? 'bg-indigo-500/20 text-white' : 'bg-slate-800 text-slate-500 group-hover:text-slate-300'
                                             }`}>
                                             {useCase.image}
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <h3 className={`font-bold text-sm lg:text-base mb-0.5 lg:mb-1 transition-colors line-clamp-1 ${activeCaseIndex === index ? 'text-white' : 'text-slate-300 group-hover:text-white'
+                                            <h3 className={`font-bold text-base mb-1 transition-colors line-clamp-1 ${activeCaseIndex === index ? 'text-white' : 'text-slate-300 group-hover:text-white'
                                                 }`}>
                                                 {useCase.title}
                                             </h3>
-                                            <p className={`text-[10px] lg:text-xs leading-relaxed transition-colors line-clamp-2 ${activeCaseIndex === index ? 'text-slate-300' : 'text-slate-500'
+                                            <p className={`text-xs leading-relaxed transition-colors line-clamp-2 ${activeCaseIndex === index ? 'text-slate-300' : 'text-slate-500'
                                                 }`}>
                                                 {useCase.description}
                                             </p>
@@ -173,11 +128,16 @@ export function UseCases() {
                             ))}
                         </div>
                         {/* Mobile scroll hint gradient */}
-                        <div className="absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-[#020617] to-transparent pointer-events-none lg:hidden" />
+                        <div className="absolute right-0 top-0 bottom-2 w-8 bg-gradient-to-l from-[#020617] to-transparent pointer-events-none md:hidden" />
+
+                        {/* V5 Inline Hint (Mobile Only - below the scroller) */}
+                        <div className="mt-2 md:hidden">
+                            <InlineHint show={swipeHint.showHint} language={language} type="swipe" />
+                        </div>
                     </div>
 
                     {/* Right: Interactive Demo Stage */}
-                    <div className="lg:col-span-8 relative">
+                    <div className="md:col-span-7 lg:col-span-8 relative">
                         {/* Browser/Window Frame */}
                         <div className="relative sticky top-24 w-full bg-[#1E293B] rounded-2xl border border-slate-700/50 shadow-2xl overflow-hidden flex flex-col">
                             {/* Window Header */}
@@ -196,20 +156,12 @@ export function UseCases() {
 
                             {/* Window Content */}
                             <div
-                                className="relative bg-[#020617] p-1 h-[350px] sm:h-[450px] md:h-auto md:aspect-[4/3] overflow-hidden group/stage"
+                                className="relative bg-[#020617] p-1 h-[400px] sm:h-[450px] md:h-auto md:aspect-[4/3] overflow-hidden group/stage"
                                 ref={tapHint.ref as any}
                                 onClickCapture={tapHint.dismissHint}
                             >
-                                {/* Interactive V3 Tap Hint */}
-                                {tapHint.showHint && (
-                                    <div className="absolute z-50 pointer-events-auto bottom-6 left-1/2 -translate-x-1/2 drop-shadow-2xl">
-                                        <TextHint
-                                            type="tap"
-                                            language={language}
-                                            onDismiss={tapHint.dismissHint}
-                                        />
-                                    </div>
-                                )}
+                                {/* Interactive V4 Tap Hint - Zero Text, Just PremiumPulse Glow */}
+                                {tapHint.showHint && <PremiumPulse />}
 
                                 <AnimatePresence mode='wait'>
                                     <motion.div
@@ -226,6 +178,11 @@ export function UseCases() {
                             </div>
                         </div>
 
+                        {/* V5 Inline Hint (Below Demo Stage) */}
+                        <div className="absolute -bottom-14 left-0 right-0 z-20">
+                            <InlineHint show={tapHint.showHint} language={language} type="tap" />
+                        </div>
+
                         {/* Background Glow for Window */}
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[110%] h-[110%] bg-indigo-500/5 blur-[80px] -z-10 rounded-full" />
                     </div>
@@ -236,7 +193,7 @@ export function UseCases() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mt-12 flex flex-col sm:flex-row justify-center items-center gap-4"
+                    className="mt-20 flex flex-col sm:flex-row justify-center items-center gap-4"
                 >
                     <button
                         onClick={() => document.getElementById('tools-catalog-block')?.scrollIntoView({ behavior: 'smooth' })}
