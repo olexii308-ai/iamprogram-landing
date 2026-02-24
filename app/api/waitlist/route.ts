@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
 export const runtime = 'nodejs';
 
@@ -88,22 +88,37 @@ export async function POST(req: Request) {
             );
         }
 
-        // Use Resend API Key directly from SMTP_PASS environment variable 
-        const resendApiKey = process.env['SMTP_PASS'];
-        const fromEmail = process.env['SMTP_FROM'] || 'onboarding@resend.dev';
+        // ProtonMail Enterprise SMTP Configuration
+        const smtpHost = process.env['SMTP_HOST'] || 'smtp.protonmail.ch';
+        const smtpPort = parseInt(process.env['SMTP_PORT'] || '587', 10);
+        const smtpUser = process.env['SMTP_USER'];
+        const smtpPass = process.env['SMTP_PASS'];
         const contactEmail = process.env['CONTACT_EMAIL'];
 
-        if (!resendApiKey || !contactEmail) {
-            console.error('[waitlist] Missing Configuration. SMTP_PASS (API Key) or CONTACT_EMAIL missing.');
+        if (!smtpUser || !smtpPass || !contactEmail) {
+            console.error('[waitlist] Missing SMTP config. Need SMTP_USER, SMTP_PASS, CONTACT_EMAIL.');
             throw new Error('Server email configuration is missing');
         }
 
-        const resend = new Resend(resendApiKey);
+        const transporter = nodemailer.createTransport({
+            host: smtpHost,
+            port: smtpPort,
+            secure: smtpPort === 465, // true for 465, false for 587 (STARTTLS)
+            auth: {
+                user: smtpUser,
+                pass: smtpPass,
+            },
+            tls: {
+                // ProtonMail requires strict TLS
+                rejectUnauthorized: true,
+            },
+        });
+
         const submittedAt = new Date().toISOString();
 
-        const { data, error } = await resend.emails.send({
-            from: `Bravery Waitlist <${fromEmail}>`,
-            to: [contactEmail],
+        await transporter.sendMail({
+            from: `"Bravery Waitlist" <${smtpUser}>`,
+            to: contactEmail,
             replyTo: normalized.email,
             subject: `[Waitlist] ${normalized.email} (${normalized.role})`,
             html: `
@@ -113,13 +128,8 @@ export async function POST(req: Request) {
                 <p><strong>Language:</strong> ${normalized.language}</p>
                 <p><strong>Source:</strong> ${normalized.source}</p>
                 <p><strong>Submitted At:</strong> ${submittedAt}</p>
-            `.trim()
+            `.trim(),
         });
-
-        if (error) {
-            console.error('[waitlist] Resend SDK Error:', error);
-            throw new Error(`Resend Error: ${error.message}`);
-        }
 
         return NextResponse.json({
             ok: true,
